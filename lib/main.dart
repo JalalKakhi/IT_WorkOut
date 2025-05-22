@@ -1,5 +1,6 @@
 
 import 'package:IT_workout/IT_workout/layout/layout_screen.dart';
+import 'package:IT_workout/IT_workout/modules/trainingScreen/training_screen.dart';
 import 'package:IT_workout/IT_workout/shared/bloc_observer.dart';
 import 'package:IT_workout/IT_workout/shared/networking/remote/dio_helper.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.red,
+          selectedItemColor: HexColor("#a60000"),
           unselectedItemColor: Colors.grey,
           backgroundColor: HexColor("#fbfcfc")
 

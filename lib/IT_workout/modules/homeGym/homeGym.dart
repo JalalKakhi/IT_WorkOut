@@ -1,7 +1,5 @@
 import 'package:IT_workout/IT_workout/shared/combonents/combontents.dart';
 import 'package:IT_workout/IT_workout/shared/style/colors.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 class HomeGym extends StatelessWidget {
