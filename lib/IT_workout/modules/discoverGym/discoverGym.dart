@@ -1,5 +1,4 @@
 import 'package:IT_workout/IT_workout/shared/combonents/combontents.dart';
-import 'package:IT_workout/IT_workout/shared/style/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,37 @@ import 'package:flutter/material.dart';
 class DiscoverGym extends StatelessWidget {
   const DiscoverGym({super.key});
 
+  Widget makeCarouselSliderItem({
+    required context,
+    required String imagePath,
+    required String title
+  }){
+    return Container(
+      height: MediaQuery.sizeOf(context).height/1.5,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        image: DecorationImage(
+            image: AssetImage(imagePath),
+            fit: BoxFit.cover
+        ),
+      ),
+      child: FractionallySizedBox(
+        alignment: Alignment.bottomCenter,
+        widthFactor: 1,
+        heightFactor: 1/10,
+        child: Container(
+          color: Colors.grey[200]?.withOpacity(0.5),
+          child: Center(
+            child: Text(
+              title.toUpperCase(),
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.white),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -23,41 +53,16 @@ class DiscoverGym extends StatelessWidget {
           // ),
           CarouselSlider(
             items: [
-              Container(
-                height: MediaQuery.sizeOf(context).height/1.5,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: MyHexColors.redGradientColors)
-                ),
-                
-                child: Column(
-                  children: [
-                    Image(
-                      image: AssetImage('assets/icons/jump-rope-svgrepo-com (1).png'),
-                      fit: BoxFit.cover,
-
-                    ),
-                    Spacer(),
-                    Text(
-                      "jump rope exercise",
-                      style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.white),
-                    )
-                  ],
-                ),
-              ),
-              Container(height: 100,width: double.infinity,color: Colors.green,),
-              Container(height: 100,width: double.infinity,color: Colors.yellow,),
-              Container(height: 100,width: double.infinity,color: Colors.black,),
-              Container(height: 100,width: double.infinity,color: Colors.blue,),
-              Container(height: 100,width: double.infinity,color: Colors.pink,),
+              makeCarouselSliderItem(context: context, imagePath: 'assets/images/confident-sportsman-with-headphones-jumping-rope.jpg', title: "jumprope workout"),
+              makeCarouselSliderItem(context: context, imagePath: 'assets/images/meal-planning-clipboard-food-arrangement.jpg', title: "make your own diet"),
+              makeCarouselSliderItem(context: context, imagePath: 'assets/images/confident-sportsman-with-headphones-jumping-rope.jpg', title: "jumprope workout"),
+              makeCarouselSliderItem(context: context, imagePath: 'assets/images/confident-sportsman-with-headphones-jumping-rope.jpg', title: "jumprope workout"),
             ],
             options: CarouselOptions(
               height: MediaQuery.sizeOf(context).height/1.5,
               initialPage: 0,
               enableInfiniteScroll: false,
               enlargeCenterPage: true,
-
-
-
             ),
           ),
           Text(
