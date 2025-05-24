@@ -30,7 +30,7 @@ class DiscoverGym extends StatelessWidget {
           child: Center(
             child: Text(
               title.toUpperCase(),
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white,overflow: TextOverflow.ellipsis,),
             ),
           ),
         ),
@@ -65,9 +65,12 @@ class DiscoverGym extends StatelessWidget {
               enlargeCenterPage: true,
             ),
           ),
+          SizedBox(
+            height: 10,
+          ),
           Text(
             'Stretches',
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           SizedBox(height: 14,),
           ListView.separated(

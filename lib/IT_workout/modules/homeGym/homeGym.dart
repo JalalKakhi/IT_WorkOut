@@ -58,7 +58,7 @@ class HomeGym extends StatelessWidget {
             children: [
               Text(
                 "Level plan",
-                style: Theme.of(context).textTheme.headlineLarge!.copyWith(color: Colors.white)
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(color: Colors.white)
               ),
               Spacer(),
               Text(
@@ -100,7 +100,7 @@ class HomeGym extends StatelessWidget {
         children: [
           Icon(Icons.search,),
           SizedBox(width: 10,),
-          Text("Search",style: TextStyle(fontSize: 15,color: Colors.grey),)
+          Text("Search",style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey),)
         ],
       ),
     ),
@@ -152,12 +152,12 @@ class HomeGym extends StatelessWidget {
                   // ),
                   Text(
                     'Challanges',
-                    style: Theme.of(context).textTheme.headlineMedium
+                    style: Theme.of(context).textTheme.headlineSmall
                   ),
                   planSection(context),
                   Text(
                     'Exercises',
-                    style: Theme.of(context).textTheme.headlineMedium
+                    style: Theme.of(context).textTheme.headlineSmall
                   ),
                   SizedBox(height: 14,),
                   ListView.separated(

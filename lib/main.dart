@@ -29,24 +29,13 @@ class MyApp extends StatelessWidget {
           color: Colors.transparent,
           elevation: 0,
           scrolledUnderElevation: 0.0,
+          titleTextStyle: Theme.of(context).textTheme.titleMedium,
         ),
-        textTheme: TextTheme(
-          headlineLarge: TextStyle(
-            fontSize: 24,
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(
             fontWeight: FontWeight.bold,
           ),
-          headlineMedium: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          bodyLarge: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-
-
-
-        ),
+         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: HexColor("#a60000"),
