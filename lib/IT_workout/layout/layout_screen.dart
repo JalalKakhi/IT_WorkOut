@@ -20,7 +20,6 @@ class LayoutScreen extends StatelessWidget {
               appBar: AppBar(
                 title: Text(
                   cubit.titles[cubit.currentIndex].toUpperCase(),
-                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
                 actions: [
                   IconButton(

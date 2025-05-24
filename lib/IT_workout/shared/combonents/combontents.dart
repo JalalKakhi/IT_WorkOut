@@ -40,7 +40,7 @@ Widget WorkoutShape (context) =>InkWell(
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(height:10 ,),
-              Text("20 min ^ 16 Exercise",style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),),
+              Text("20 min ^ 16 Exercise",style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Colors.grey),),
             ],
           ),
         )
@@ -51,4 +51,23 @@ Widget WorkoutShape (context) =>InkWell(
 
 void navigate(context,Widget screen){
   Navigator.push(context, MaterialPageRoute(builder: (context)=>screen));
+}
+
+Widget makeMaterialButton({
+  Color? color,
+  required bool border,
+}){
+  return Container(
+    clipBehavior: Clip.antiAliasWithSaveLayer,
+    height: 60,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      border: border ? Border.all(color: MyHexColors.grey,width: 2) : null ,
+    ),
+    child: MaterialButton(
+      onPressed: (){},
+      child: Text("Restart"),
+      color: color,
+    ),
+  );
 }
