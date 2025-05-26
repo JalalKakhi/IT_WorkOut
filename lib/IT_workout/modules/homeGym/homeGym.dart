@@ -1,3 +1,4 @@
+import 'package:IT_workout/IT_workout/modules/planScreen/plan_screen.dart';
 import 'package:IT_workout/IT_workout/shared/combonents/combontents.dart';
 import 'package:IT_workout/IT_workout/shared/style/colors.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,9 @@ class HomeGym extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: MaterialButton(
-                  onPressed:(){},
+                  onPressed:(){
+                    navigate(context, PlanScreen());
+                  },
                   color: Colors.white,
                   child: const Text("Start",style: TextStyle(color: Colors.red),),
                 ),
