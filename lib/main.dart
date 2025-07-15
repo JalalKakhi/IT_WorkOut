@@ -1,5 +1,7 @@
 
 import 'package:IT_workout/IT_workout/layout/layout_screen.dart';
+import 'package:IT_workout/IT_workout/modules/exercisesScreen/exercises_screen.dart';
+import 'package:IT_workout/IT_workout/modules/planScreen/plan_screen.dart';
 import 'package:IT_workout/IT_workout/modules/trainingScreen/training_screen.dart';
 import 'package:IT_workout/IT_workout/shared/bloc_observer.dart';
 import 'package:IT_workout/IT_workout/shared/networking/remote/dio_helper.dart';

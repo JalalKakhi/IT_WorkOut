@@ -1,10 +1,11 @@
+import 'package:IT_workout/IT_workout/modules/exercisesScreen/exercises_screen.dart';
 import 'package:IT_workout/IT_workout/modules/trainingScreen/training_screen.dart';
 import 'package:IT_workout/IT_workout/shared/style/colors.dart';
 import 'package:flutter/material.dart';
 
 Widget WorkoutShape (context) =>InkWell(
   onTap: (){
-    navigate(context, TrainingScreen());
+    navigate(context, ExercisesScreen());
   },
   child: Container(
     width: double.infinity,
@@ -55,19 +56,31 @@ void navigate(context,Widget screen){
 
 Widget makeMaterialButton({
   Color? color,
+  double height=60,
+  double? width,
   required bool border,
+  required void Function()? onPressed,
+  required String name,
 }){
   return Container(
     clipBehavior: Clip.antiAliasWithSaveLayer,
-    height: 60,
+    height: height,
+    width: width,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
       border: border ? Border.all(color: MyHexColors.grey,width: 2) : null ,
     ),
     child: MaterialButton(
-      onPressed: (){},
-      child: Text("Restart"),
+      onPressed: onPressed,
       color: color,
+      child: Text(name),
     ),
+  );
+}
+
+Widget makeSeparatorLine(){
+  return Container(
+    color: MyHexColors.grey,
+    height: 1,
   );
 }

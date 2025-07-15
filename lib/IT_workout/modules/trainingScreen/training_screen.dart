@@ -49,11 +49,21 @@ class _TrainingScreenState extends State<TrainingScreen> {
     return Row(
       children: [
         Expanded(
-            child: makeMaterialButton(color: MyHexColors.redGradientColors[3], border: false)
+            child: makeMaterialButton(
+                color: MyHexColors.redGradientColors[3],
+                onPressed: (){},
+                border: false,
+                name: "pause"
+
+            )
         ),
         SizedBox(width: 10,),
         Expanded(
-            child: makeMaterialButton(border: true)
+            child: makeMaterialButton(
+              border: true,
+              name: "restart",
+              onPressed: (){},
+            )
         ),
       ],
     );
