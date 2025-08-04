@@ -11,7 +11,7 @@ class LayoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocProvider(
-        create: (context) => LayoutCubit()..getLayoutData(),
+        create: (context) => LayoutCubit(),
         child: BlocConsumer<LayoutCubit,LayoutStates>(
           listener: (context, state) {},
           builder: (context, state) {

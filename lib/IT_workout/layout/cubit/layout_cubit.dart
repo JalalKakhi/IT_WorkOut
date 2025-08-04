@@ -1,5 +1,4 @@
 import 'package:IT_workout/IT_workout/layout/cubit/layout_states.dart';
-import 'package:IT_workout/IT_workout/models/model1/model1.dart';
 import 'package:IT_workout/IT_workout/modules/activityScreen/activity_screen.dart';
 import 'package:IT_workout/IT_workout/modules/discoverGym/discoverGym.dart';
 import 'package:IT_workout/IT_workout/modules/homeGym/homeGym.dart';
@@ -42,23 +41,5 @@ class LayoutCubit extends BaseCubit<LayoutStates>{
     "activity",
   ];
 
-  Model1 m=Model1();
-
-  void getLayoutData(){
-    fetchData(
-        path: "latest",
-        // query:{
-        //   "apikey":"pub_58624869dcfd8c5573abfce48aff40fcebf08",
-        //   "q":"donald%20trump",
-        //   "region":"washington-united%20states%20of%20america"
-        // },
-        errorMessage: "error in get layout data",
-        successState: success(),
-        errorState: failed(),
-      loadingState: loading(),
-      model: m,
-
-    );
-  }
 
 }
