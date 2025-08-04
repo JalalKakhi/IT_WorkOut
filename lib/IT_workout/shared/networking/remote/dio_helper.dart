@@ -5,7 +5,7 @@ class DioHelper{
   static initial(){
     dio=Dio(
       BaseOptions(
-        baseUrl: "https://newsapi.org/v2/everything?q=Apple&from=2025-05-12&sortBy=popularity&apiKey=f11088983fa94d7dad07a79759047544",
+        baseUrl: "http://192.168.137.168:8000",
         receiveDataWhenStatusError: true,
       ),
     );
@@ -14,18 +14,23 @@ class DioHelper{
   static Future<Response> getData({
     required String path,
     Map<String,dynamic>? query,
+    Map<String,dynamic>? header,
 
 })async
   {
     return await dio!.get(
       path,
       queryParameters: query,
+        options: Options(
+            headers:header
+        )
     );
 }
 
   static Future<Response> postData({
     required String path,
     Map<String,dynamic>? query,
+    Map<String,dynamic>? header,
     required Map<String,dynamic> data,
 })async
   {
@@ -33,6 +38,9 @@ class DioHelper{
       path,
       data:data,
       queryParameters: query,
+      options: Options(
+        headers:header
+      )
     );
   }
 }
