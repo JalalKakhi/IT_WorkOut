@@ -9,6 +9,7 @@ abstract class BaseCubit<T> extends Cubit<T> {
     required String path,
     required String errorMessage,
     Map<String, dynamic>? query,
+    Map<String, dynamic>? header,
     required T successState,
     required T errorState,
     required T loadingState,
@@ -18,7 +19,8 @@ abstract class BaseCubit<T> extends Cubit<T> {
     emit(loadingState);
     await DioHelper.getData(
         path: path,
-        query: query
+        query: query,
+        header: header
     ).then((response)
     {
       print("RAW RESPONSE: ${response.data}");
