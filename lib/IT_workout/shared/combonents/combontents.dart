@@ -84,3 +84,8 @@ Widget makeSeparatorLine(){
     height: 1,
   );
 }
+
+Widget mySeparated() => Container(
+  height: 1,
+  color: Colors.grey[300],
+);

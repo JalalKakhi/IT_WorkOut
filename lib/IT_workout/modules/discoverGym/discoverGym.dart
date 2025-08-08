@@ -1,11 +1,11 @@
 import 'package:IT_workout/IT_workout/shared/combonents/combontents.dart';
+import 'package:IT_workout/IT_workout/shared/notif_system/notification.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DiscoverGym extends StatelessWidget {
   const DiscoverGym({super.key});
-
   Widget makeCarouselSliderItem({
     required context,
     required String imagePath,
@@ -84,5 +84,9 @@ class DiscoverGym extends StatelessWidget {
         ],
       ),
     );
+    // Center(child: ElevatedButton(onPressed: (){
+    //   NotiService().showNotification()
+    // }, child: Text('')),)
   }
+
 }

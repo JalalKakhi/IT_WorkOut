@@ -1,19 +1,20 @@
-
 import 'package:IT_workout/IT_workout/layout/layout_screen.dart';
 import 'package:IT_workout/IT_workout/modules/exercisesScreen/exercises_screen.dart';
 import 'package:IT_workout/IT_workout/modules/planScreen/plan_screen.dart';
 import 'package:IT_workout/IT_workout/modules/trainingScreen/training_screen.dart';
 import 'package:IT_workout/IT_workout/shared/bloc_observer.dart';
 import 'package:IT_workout/IT_workout/shared/networking/remote/dio_helper.dart';
+import 'package:IT_workout/IT_workout/shared/notif_system/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioHelper.initial();
   runApp(const MyApp());
+  NotiService().initNotifaction();
 }
 
 class MyApp extends StatelessWidget {
@@ -37,19 +38,14 @@ class MyApp extends StatelessWidget {
           titleLarge: TextStyle(
             fontWeight: FontWeight.bold,
           ),
-         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: HexColor("#a60000"),
-          unselectedItemColor: Colors.grey,
-          backgroundColor: HexColor("#fbfcfc")
-
-
         ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: HexColor("#a60000"),
+            unselectedItemColor: Colors.grey,
+            backgroundColor: HexColor("#fbfcfc")),
       ),
       home: LayoutScreen(),
     );
   }
 }
-
-

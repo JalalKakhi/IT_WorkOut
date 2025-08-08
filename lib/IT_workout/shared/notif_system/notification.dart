@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class NotiSevice {
+class NotiService {
   final notifactionPlugin = FlutterLocalNotificationsPlugin();
 
   bool _isInit = false;
@@ -29,5 +29,14 @@ class NotiSevice {
             channelDescription: 'Daily Notification Channel',
             importance: Importance.max,
             priority: Priority.high));
+  }
+
+  // Show Notification
+  Future<void> showNotification({
+    int  id = 0,
+    String? title,
+    String? body,
+  }) async {
+    return notifactionPlugin.show(id, title, body, const NotificationDetails());
   }
 }
