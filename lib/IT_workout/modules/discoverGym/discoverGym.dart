@@ -73,14 +73,14 @@ class DiscoverGym extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           SizedBox(height: 14,),
-          ListView.separated(
-              shrinkWrap: true,
-              physics:ScrollPhysics(parent: BouncingScrollPhysics()) ,
-              scrollDirection: Axis.vertical,
-              itemBuilder:(context , index) => WorkoutShape(context) ,
-              separatorBuilder:(context , index) => SizedBox(height: 10.0,),
-              itemCount: 6
-          ),
+          // ListView.separated(
+          //     shrinkWrap: true,
+          //     physics:ScrollPhysics(parent: BouncingScrollPhysics()) ,
+          //     scrollDirection: Axis.vertical,
+          //     itemBuilder:(context , index) => WorkoutShape(context) ,
+          //     separatorBuilder:(context , index) => SizedBox(height: 10.0,),
+          //     itemCount: 6
+          // ),
         ],
       ),
     );

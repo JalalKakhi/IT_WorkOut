@@ -1,20 +1,27 @@
-class GetPlanModel{
+class GetPlanModel {
   String? message;
-  GetPlanData? data;
-  GetPlanModel.fromJson(Map<String,dynamic>?json){
-    message = json?["message "];
-    data = json?["data "] != null ? GetPlanData.fromJson(json!["data "]) : null;
-  }
+  List<GetPlanData> data = [];
 
+  GetPlanModel.fromJson(Map<String, dynamic>? json) {
+    message = json?["message"];
+    if (json?["data"] != null) {
+      json?["data"].forEach((plan) {
+        data.add(GetPlanData.fromJson(plan));
+      });
+    }
+  }
 }
+
 class GetPlanData {
   String? name;
-  String? description ;
-  int? number_of_day_to_train;
+  String? description;
+  int? numberOfDayToTrain;
+  int? levelId; // optional, if you want it
 
-  GetPlanData.fromJson(Map<String,dynamic>?json){
-    this.name=json?["name"];
-    this.description=json?["description"];
-    this.number_of_day_to_train=json?["number_of_day_to_train"];
+  GetPlanData.fromJson(Map<String, dynamic>? json) {
+    name = json?["name"];
+    description = json?["description"];
+    numberOfDayToTrain = json?["number_of_day_to_train"];
+    levelId = json?["level_id"]; // optional
   }
 }

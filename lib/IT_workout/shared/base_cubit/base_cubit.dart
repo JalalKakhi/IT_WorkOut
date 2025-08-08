@@ -5,6 +5,9 @@ abstract class BaseCubit<T> extends Cubit<T> {
   BaseCubit(T initialState) :super(initialState);
 
 
+  String baseToken ="68|UGNAbHjzSjrsD9pl0EpoEV6u4OG8ZTUnasyuVrA9c608e2b6";
+
+
   Future<void> fetchData<R>({
     required String path,
     required String errorMessage,
@@ -24,7 +27,7 @@ abstract class BaseCubit<T> extends Cubit<T> {
     ).then((response)
     {
       print("RAW RESPONSE: ${response.data}");
-      if (response.data != null && response.data!["data "] != null) {
+      if (response.data != null && response.data!["data"] != null) {
         final model = fromJson(response.data);
         onSuccess(model);
         print(response.data);

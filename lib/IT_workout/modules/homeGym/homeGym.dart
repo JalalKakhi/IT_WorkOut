@@ -16,90 +16,55 @@ class HomeGym extends StatelessWidget {
         String? name,
         String? description
       }
-      ) =>Padding(
-    padding: const EdgeInsets.symmetric(vertical: 14.0),
-    child: Stack(
-      children: [
-        Container(
-          height:MediaQuery.of(context).size.height/4,
-          width: double.infinity,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: MyHexColors.redGradientColors,
-                  end:AlignmentDirectional.bottomStart,
-                  begin: AlignmentDirectional.topEnd
-              ),
-              borderRadius: BorderRadius.circular(20)
+      ) =>Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height/4,
+            decoration: BoxDecoration(
+                image: DecorationImage(image:  AssetImage("assets/images/plan.jpg"),
+                    fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(20)
+            ),
           ),
-          child: Row(
-            children: [
-              Spacer(),
-              Container(
-                  width: MediaQuery.of(context).size.width/3,
-                  height: MediaQuery.of(context).size.height/4,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(image:  AssetImage("assets/icons/muscles.png"),
-                          fit: BoxFit.cover
-                      )
+          Container(
+            height:MediaQuery.of(context).size.height/4,
+            padding: EdgeInsets.all(5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name!,
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Colors.white , fontWeight: FontWeight.bold)
+                ),
+                Spacer(),
+                Text(
+                  description!,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Spacer(),
+                Container(
+                  width: double.infinity,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  decoration:BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [
-                              HexColor("#DC1C13").withOpacity(0.0),
-                              HexColor("#EA4C46").withOpacity(0.0),
-                              HexColor("#F07470").withOpacity(0.7),
-                              HexColor("#F1959B").withOpacity(1),
+                  child: MaterialButton(
+                    onPressed:(){
+                      navigate(context, PlanScreen());
+                    },
+                    color: Colors.white,
+                    child: const Text("Start",style: TextStyle(color: Colors.red),),
+                  ),
+                )
 
-                            ],
-                            end:AlignmentDirectional.bottomStart,
-                            begin: AlignmentDirectional.topEnd
-                        )
-                    ),
-                  )
-              ),
-            ],
-          ),
-        ),
-        Container(
-          height:MediaQuery.of(context).size.height/4,
-          padding: EdgeInsets.all(5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name!,
-                style: Theme.of(context).textTheme.displaySmall!.copyWith(color: Colors.white)
-              ),
-              Spacer(),
-              Text(
-                description!,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-              Spacer(),
-              Container(
-                width: double.infinity,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                decoration:BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: MaterialButton(
-                  onPressed:(){
-                    navigate(context, PlanScreen());
-                  },
-                  color: Colors.white,
-                  child: const Text("Start",style: TextStyle(color: Colors.red),),
-                ),
-              )
-
-            ],
-          ),
-        )
-      ],
-    ),
-  );
+              ],
+            ),
+          )
+        ],
+      );
   Widget searchSection (context) =>Padding(
     padding: const EdgeInsets.symmetric(vertical: 14.0),
     child: Container(
@@ -120,56 +85,71 @@ class HomeGym extends StatelessWidget {
   );
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HomeCubit()..getPlan(),
-      child: BlocConsumer<HomeCubit,HomeStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          var cubit = HomeCubit.get(context);
-          return ConditionalBuilder(
-              condition: state is SuccessGetPlanState && cubit.getPlanModel != null && cubit.getPlanModel!.data != null,
-              builder: (context) => Column(
-                children: [
-                  searchSection(context),
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+    return BlocConsumer<HomeCubit,HomeStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = HomeCubit.get(context);
+        return ConditionalBuilder(
+            condition:  cubit.getPlanModel != null && cubit.getPlanModel!.data != null && cubit.getCategoriesModel != null && cubit.getCategoriesModel!.data != null,
+            builder: (context) => Column(
+              children: [
+                //searchSection(context),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                            Text(
-                                'Challanges',
-                                style: Theme.of(context).textTheme.headlineSmall
+                          Text(
+                              'Plans',
+                              style: Theme.of(context).textTheme.headlineSmall
+                          ),
+                          Padding(
+                            padding:const EdgeInsets.symmetric(vertical: 14.0),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height/4,
+                              child: ListView.separated(
+                                itemBuilder: (BuildContext context, int index) => planSection(context,name: cubit.getPlanModel?.data[index]?.name, description: cubit.getPlanModel?.data[index]?.description),
+                                separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 20,),
+                                itemCount: cubit.getPlanModel!.data!.length,
+                              ),
                             ),
-                            planSection(context,name: cubit.getPlanModel?.data?.name, description: cubit.getPlanModel?.data?.description),
-                            Text(
-                                'Exercises',
-                                style: Theme.of(context).textTheme.headlineSmall
-                            ),
-                            SizedBox(height: 14,),
-                            ListView.separated(
-                                shrinkWrap: true,
-                                physics:ScrollPhysics(parent: BouncingScrollPhysics()) ,
-                                scrollDirection: Axis.vertical,
-                                itemBuilder:(context , index) => WorkoutShape(context) ,
-                                separatorBuilder:(context , index) => SizedBox(height: 10.0,),
-                                itemCount: 6
-                            ),
+                          ),
 
-                          ],
-                        ),
-                      ],
-                    ),
+
+
+                          Text(
+                              'Exercises',
+                              style: Theme.of(context).textTheme.headlineSmall
+                          ),
+                          SizedBox(height: 14,),
+                          ListView.separated(
+                              shrinkWrap: true,
+                              physics:ScrollPhysics(parent: BouncingScrollPhysics()) ,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder:(context , index) => WorkoutShape(
+                                  context,
+                                  name: cubit.getCategoriesModel!.data[index]!.name! ,
+                                  description:cubit.getCategoriesModel!.data[index]!.description! ,
+                                  image_path: cubit.getCategoriesModel!.data[index]!.image_path!
+                              ) ,
+                              separatorBuilder:(context , index) => SizedBox(height: 10.0,),
+                              itemCount: cubit.getCategoriesModel!.data!.length
+                          ),
+
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              fallback: (context) =>state is ErrorGetPlanState? Center(child: Text("check your connection"),) : Center(child: CircularProgressIndicator(color: Colors.red,),),
-          );
+                ),
+              ],
+            ),
+            fallback: (context) =>state is ErrorGetPlanState? Center(child: Text("check your connection"),) : Center(child: CircularProgressIndicator(color: Colors.red,),),
+        );
 
-        },
+      },
 
-      ),
     );
   }
 }

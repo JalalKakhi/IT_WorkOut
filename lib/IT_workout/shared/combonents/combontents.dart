@@ -3,7 +3,7 @@ import 'package:IT_workout/IT_workout/modules/trainingScreen/training_screen.dar
 import 'package:IT_workout/IT_workout/shared/style/colors.dart';
 import 'package:flutter/material.dart';
 
-Widget WorkoutShape (context) =>InkWell(
+Widget WorkoutShape (context,{required String image_path , required String name ,required String description}) =>InkWell(
   onTap: (){
     navigate(context, ExercisesScreen());
   },
@@ -27,7 +27,7 @@ Widget WorkoutShape (context) =>InkWell(
             borderRadius:  BorderRadiusDirectional.circular(20),
           ),
           child: Image(
-            image: AssetImage('assets/icons/muscles.png'),
+            image: NetworkImage(image_path),
           ),
         ),
         SizedBox(width: 15,),
@@ -37,11 +37,11 @@ Widget WorkoutShape (context) =>InkWell(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Abs Exercises'.toUpperCase(),
+                name.toUpperCase(),
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(height:10 ,),
-              Text("20 min ^ 16 Exercise",style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Colors.grey),),
+              Text(description,style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Colors.grey),),
             ],
           ),
         )
