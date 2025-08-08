@@ -5,7 +5,38 @@ import 'package:flutter/material.dart';
 
 Widget WorkoutShape (context,{required String image_path , required String name ,required String description}) =>InkWell(
   onTap: (){
-    navigate(context, ExercisesScreen());
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Center(
+          child: Dialog(
+
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          elevation: 5.0,
+          backgroundColor: Colors.white,
+          child: true ? Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 3*60+2*10,
+              child: ListView.separated(
+
+                  itemBuilder: (context, index) => makeMaterialButton(name: "level name" , onPressed: () {
+                    navigate(context, ExercisesScreen());
+                  }, border: true,),
+                  separatorBuilder:(context, index) => const  SizedBox(height: 10,),
+                  itemCount: 3
+              ),
+            ),
+          ) : false ? CircularProgressIndicator(color: Colors.red,) : Center(child: Text("check your connection!"),)   ,
+                      ),
+        );
+      },
+    );
+
+
+    
   },
   child: Container(
     width: double.infinity,
@@ -74,6 +105,7 @@ Widget makeMaterialButton({
       onPressed: onPressed,
       color: color,
       child: Text(name),
+
     ),
   );
 }
