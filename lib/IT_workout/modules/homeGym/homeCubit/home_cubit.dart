@@ -13,9 +13,7 @@ class HomeCubit extends BaseCubit<HomeStates> {
   Future<void> getPlan() async {
      fetchData(
       path: "/api/plan/getPlan",
-      query: {
-        //"id" : 6
-      },
+
       errorMessage: "Error in getting plan in home screen",
       successState: SuccessGetPlanState(),
       errorState: ErrorGetPlanState(),
