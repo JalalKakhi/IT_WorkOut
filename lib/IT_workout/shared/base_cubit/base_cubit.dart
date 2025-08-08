@@ -5,10 +5,14 @@ abstract class BaseCubit<T> extends Cubit<T> {
   BaseCubit(T initialState) :super(initialState);
 
 
+  String baseToken ="68|UGNAbHjzSjrsD9pl0EpoEV6u4OG8ZTUnasyuVrA9c608e2b6";
+
+
   Future<void> fetchData<R>({
     required String path,
     required String errorMessage,
     Map<String, dynamic>? query,
+    Map<String, dynamic>? header,
     required T successState,
     required T errorState,
     required T loadingState,
@@ -18,11 +22,12 @@ abstract class BaseCubit<T> extends Cubit<T> {
     emit(loadingState);
     await DioHelper.getData(
         path: path,
-        query: query
+        query: query,
+        header: header
     ).then((response)
     {
       print("RAW RESPONSE: ${response.data}");
-      if (response.data != null && response.data!["data "] != null) {
+      if (response.data != null && response.data!["data"] != null) {
         final model = fromJson(response.data);
         onSuccess(model);
         print(response.data);
