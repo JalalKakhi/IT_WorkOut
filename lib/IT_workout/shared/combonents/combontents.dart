@@ -1,62 +1,10 @@
 import 'package:IT_workout/IT_workout/modules/exercisesScreen/exercises_screen.dart';
 import 'package:IT_workout/IT_workout/modules/trainingScreen/training_screen.dart';
 import 'package:IT_workout/IT_workout/shared/style/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-<<<<<<< HEAD
-Widget WorkoutShape(context) => InkWell(
-      onTap: () {
-        navigate(context, ExercisesScreen());
-      },
-      child: Container(
-        width: double.infinity,
-        height: MediaQuery.sizeOf(context).height / 9,
-        decoration: BoxDecoration(color: Colors.white),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              width: MediaQuery.sizeOf(context).width / 5,
-              height: double.infinity,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(colors: MyHexColors.redGradientColors),
-                borderRadius: BorderRadiusDirectional.circular(20),
-              ),
-              child: Image(
-                image: AssetImage('assets/icons/muscles.png'),
-              ),
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Abs Exercises'.toUpperCase(),
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "20 min ^ 16 Exercise",
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(color: Colors.grey),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-=======
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 Widget WorkoutShape (context,{required String image_path , required String name ,required String description}) =>InkWell(
   onTap: (){
     showDialog(
@@ -64,7 +12,6 @@ Widget WorkoutShape (context,{required String image_path , required String name 
       builder: (BuildContext context) {
         return Center(
           child: Dialog(
-
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
@@ -87,11 +34,9 @@ Widget WorkoutShape (context,{required String image_path , required String name 
                       ),
         );
       },
-    );
-
-
-    
+    );  
   },
+
   child: Container(
     width: double.infinity,
     height: MediaQuery.sizeOf(context).height/9,
@@ -134,7 +79,6 @@ Widget WorkoutShape (context,{required String image_path , required String name 
     ),
   ),
 );
->>>>>>> origin
 
 void navigate(context, Widget screen) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => screen));

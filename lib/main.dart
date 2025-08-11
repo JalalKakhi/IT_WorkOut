@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-=======
-
 import 'package:IT_workout/IT_workout/layout/cubit/layout_cubit.dart';
->>>>>>> origin
 import 'package:IT_workout/IT_workout/layout/layout_screen.dart';
-import 'package:IT_workout/IT_workout/modules/exercisesScreen/exercises_screen.dart';
+import 'package:IT_workout/IT_workout/modules/bmi/bmiCubit/bmi_cubit.dart';
 import 'package:IT_workout/IT_workout/modules/homeGym/homeCubit/home_cubit.dart';
-import 'package:IT_workout/IT_workout/modules/planScreen/plan_screen.dart';
-import 'package:IT_workout/IT_workout/modules/trainingScreen/training_screen.dart';
+import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_cubit.dart';
 import 'package:IT_workout/IT_workout/shared/bloc_observer.dart';
 import 'package:IT_workout/IT_workout/shared/networking/remote/dio_helper.dart';
 import 'package:IT_workout/IT_workout/shared/notif_system/notification.dart';
@@ -31,8 +26,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(context) => LayoutCubit()),
-        BlocProvider(create:(context) => HomeCubit()..getPlan()..getCategories()),
+        BlocProvider(create: (context) => LayoutCubit()),
+        BlocProvider(
+            create: (context) => HomeCubit()
+              ..getPlan()
+              ..getCategories()),
+              BlocProvider(create: (context)=> SettingCubit() ),
+              BlocProvider(create: (context) =>  BmiCubit())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -45,30 +45,20 @@ class MyApp extends StatelessWidget {
             scrolledUnderElevation: 0.0,
             titleTextStyle: Theme.of(context).textTheme.titleMedium,
           ),
-<<<<<<< HEAD
-        ),
+        
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
             type: BottomNavigationBarType.fixed,
             selectedItemColor: HexColor("#a60000"),
             unselectedItemColor: Colors.grey,
             backgroundColor: HexColor("#fbfcfc")),
-=======
           textTheme: const TextTheme(
-            titleLarge: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-           ),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: HexColor("#a60000"),
-            unselectedItemColor: Colors.grey,
-            backgroundColor: HexColor("#fbfcfc")
-
-
+          titleLarge: TextStyle(
+            fontWeight: FontWeight.bold,
           ),
         ),
-        home: LayoutScreen(),
->>>>>>> origin
+       
+        ),
+         home: LayoutScreen(),
       ),
     );
   }
