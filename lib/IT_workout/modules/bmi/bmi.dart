@@ -1,5 +1,8 @@
+import 'package:IT_workout/IT_workout/layout/layout_screen.dart';
 import 'package:IT_workout/IT_workout/modules/bmi/bmiCubit/bmi_cubit.dart';
 import 'package:IT_workout/IT_workout/modules/bmi/bmiCubit/bmi_states.dart';
+import 'package:IT_workout/IT_workout/shared/combonents/combontents.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,16 +14,13 @@ class Bmi extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<Bmi> {
-  bool BMICal = false;
-  int BMI = 0;
-  bool isMale = true;
-  double hight = 180;
-  int age = 18;
-  int weight = 40;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BmiCubit,BmiStates>(
+    return BlocConsumer<BmiCubit, BmiStates>(
         builder: (context, state) {
+          var cubit = BmiCubit.get(context);
+          bool isMale = cubit.userModel?.gender == "Male" ? true : false;
+          int age = 18;
           return Scaffold(
             appBar: AppBar(
               titleSpacing: 75,
@@ -134,7 +134,7 @@ class _MyWidgetState extends State<Bmi> {
                           textBaseline: TextBaseline.alphabetic,
                           children: [
                             Text(
-                              '${hight.round()}',
+                              '${cubit.userModel?.tall}',
                               style: TextStyle(
                                   fontWeight: FontWeight.w900, fontSize: 30),
                             ),
@@ -151,10 +151,10 @@ class _MyWidgetState extends State<Bmi> {
                         Slider(
                           onChanged: (value) {
                             setState(() {
-                              hight = value;
+                              cubit.userModel?.tall = value.toInt();
                             });
                           },
-                          value: hight,
+                          value: cubit.userModel!.tall!.toDouble(),
                           min: 100,
                           max: 220,
                         )
@@ -238,7 +238,7 @@ class _MyWidgetState extends State<Bmi> {
                                     color: Colors.white),
                               ),
                               Text(
-                                '${weight}',
+                                '${cubit.userModel?.weight}',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w900, fontSize: 30),
                               ),
@@ -248,7 +248,8 @@ class _MyWidgetState extends State<Bmi> {
                                   FloatingActionButton(
                                     onPressed: () {
                                       setState(() {
-                                        weight--;
+                                        cubit.userModel!.weight =
+                                            cubit.userModel!.weight! - 1;
                                       });
                                     },
                                     child: Icon(
@@ -260,7 +261,8 @@ class _MyWidgetState extends State<Bmi> {
                                   FloatingActionButton(
                                     onPressed: () {
                                       setState(() {
-                                        weight++;
+                                        cubit.userModel!.weight =
+                                            cubit.userModel!.weight! + 1;
                                       });
                                     },
                                     child: Icon(Icons.add, color: Colors.red),
@@ -276,30 +278,40 @@ class _MyWidgetState extends State<Bmi> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.red),
-                      child: MaterialButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(builder: (context) => BmiResult(age: age, isMale: isMale, result: weight+hight.round()),)
-                          // );
-                          Navigator.pop(context);
-                          BMI = weight + hight.round();
-                        },
-                        child: Text(
-                          'Colculate',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
-                        ),
-                      )),
-                )
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ConditionalBuilder(
+                      condition: state is LoadingBmiState,
+                      builder: (BuildContext context) {
+                        return Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.red),
+                          child: MaterialButton(
+                            onPressed: () {
+                              cubit.postBmi(data: {
+                                "tall": cubit.userModel!.tall!,
+                                "weight": cubit.userModel!.weight!
+                              });
+                              if (state is SuccessBmiState)
+                                navigateAndReplace(context, LayoutScreen());
+                            },
+                            child: Text('Colculate',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: Colors.grey,
+                                    )),
+                          ),
+                        );
+                      },
+                      fallback: (BuildContext context) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    )),
               ],
             ),
           );

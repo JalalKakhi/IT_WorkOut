@@ -2,11 +2,9 @@ import 'package:IT_workout/IT_workout/shared/networking/remote/dio_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class BaseCubit<T> extends Cubit<T> {
-  BaseCubit(T initialState) :super(initialState);
+  BaseCubit(T initialState) : super(initialState);
 
-
-  String baseToken ="68|UGNAbHjzSjrsD9pl0EpoEV6u4OG8ZTUnasyuVrA9c608e2b6";
-
+  String baseToken = "71|1IBuJ5O3gSuG3X9RIVaN1B6H0iH1MPtntX0K62Ys0d4a480a";
 
   Future<void> fetchData<R>({
     required String path,
@@ -20,12 +18,8 @@ abstract class BaseCubit<T> extends Cubit<T> {
     required void Function(R data) onSuccess,
   }) async {
     emit(loadingState);
-    await DioHelper.getData(
-        path: path,
-        query: query,
-        header: header
-    ).then((response)
-    {
+    await DioHelper.getData(path: path, query: query, header: header)
+        .then((response) {
       print("RAW RESPONSE: ${response.data}");
       if (response.data != null && response.data!["data"] != null) {
         final model = fromJson(response.data);
@@ -33,18 +27,13 @@ abstract class BaseCubit<T> extends Cubit<T> {
         print(response.data);
         emit(successState);
       } else {
-        throw("the data is null ");
+        throw ("the data is null ");
       }
-    }
-    ).catchError((error)
-    {
+    }).catchError((error) {
       print('$errorMessage: ${error.toString()}');
       emit(errorState);
-    }
-    );
+    });
   }
-
-
 
   Future<void> PostData<R>({
     required String path,
@@ -60,13 +49,8 @@ abstract class BaseCubit<T> extends Cubit<T> {
   }) async {
     emit(loadingState);
     await DioHelper.postData(
-        path: path,
-        query: query,
-        data: data,
-        header: header
-
-    ).then((response)
-    {
+            path: path, query: query, data: data, header: header)
+        .then((response) {
       print("RAW RESPONSE POST: ${response.data}");
       if (response.data != null && response.data!["data "] != null) {
         final model = fromJson(response.data);
@@ -74,15 +58,11 @@ abstract class BaseCubit<T> extends Cubit<T> {
         print(response.data);
         emit(successState);
       } else {
-        throw("the data is null ");
+        throw ("the data is null ");
       }
-    }
-    ).catchError((error)
-    {
+    }).catchError((error) {
       print('$errorMessage: ${error.toString()}');
       emit(errorState);
-    }
-    );
+    });
   }
-
 }

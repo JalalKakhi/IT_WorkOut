@@ -1,7 +1,7 @@
 abstract class SettingStates {}
 
-class InitialStatu extends SettingStates {}
+class InitialState extends SettingStates {}
 
-class LoadingSettingStatu extends SettingStates{}
-class SuccessSettingStatu extends SettingStates{}
-class ErrorSettingStatu extends SettingStates {}
+class LoadingSettingState extends SettingStates{}
+class SuccessSettingState extends SettingStates{}
+class ErrorSettingState extends SettingStates {}

@@ -1,4 +1,6 @@
 import 'package:IT_workout/IT_workout/modules/bmi/bmi.dart';
+import 'package:IT_workout/IT_workout/modules/change_password.dart/changePassword.dart';
+import 'package:IT_workout/IT_workout/modules/change_username.dart/changeUsername.dart';
 import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_cubit.dart';
 import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_states.dart';
 import 'package:IT_workout/IT_workout/shared/combonents/combontents.dart';
@@ -13,32 +15,31 @@ class Setting extends StatefulWidget {
 }
 
 class _ProfileGymState extends State<Setting> {
-            bool BMICal = false;
-          int BMI = 0;
-          int kcalGoal = 200;
-          bool isMale = true;
-          double hight = 180;
-          int age = 18;
-          int weight = 40;
+  late SettingCubit cubit;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SettingCubit,SettingStates>(
+    return BlocConsumer<SettingCubit, SettingStates>(
         builder: (context, state) {
+          final gender = ['Male', 'Female'];
+          cubit = SettingCubit.get(context);
           return Scaffold(
               body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  'Set your work out informations ',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: Colors.red),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
-                    Text(
-                      'set your goals',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(color: Colors.red),
-                    ),
                     Expanded(
                       child: Text(
                         'Kcal goal',
@@ -49,12 +50,68 @@ class _ProfileGymState extends State<Setting> {
                       ),
                     ),
                     GestureDetector(
-                        onTap: () => _showEditDialog(context),
-                        child: Text('$kcalGoal',
+                        onTap: () => showEditKcal(context),
+                        child: Text('${cubit.userModel?.target_calories}',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
                                 .copyWith(color: Colors.grey))),
+                  ],
+                ),
+                SizedBox(height: 10),
+                mySeparated(),
+                SizedBox(
+                  height: 10,
+                ),
+                                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        ' Your birthday',
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
+                      ),
+                    ),
+                    GestureDetector(
+                        onTap: () => showEditKcal(context),
+                        child: Text('${cubit.userModel?.target_calories}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.grey))),
+                  ],
+                ),
+              SizedBox(height: 10), 
+                mySeparated(),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Your gender',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.grey),
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 4)),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                            value: cubit.userModel!.gender,
+                            items: gender.map(changeGender).toList(),
+                            onChanged: (value) => setState(() {
+                                  cubit.userModel!.gender = value;
+                                  
+                                })),
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -79,7 +136,7 @@ class _ProfileGymState extends State<Setting> {
                       onPressed: () {
                         navigate(context, Bmi());
                       },
-                      child: Text(BMICal ? '???' : '${BMI}',
+                      child: Text('${cubit.userModel?.BMI}',
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -87,6 +144,7 @@ class _ProfileGymState extends State<Setting> {
                     ),
                   ],
                 ),
+                SizedBox(height: 10),
                 mySeparated(),
                 SizedBox(
                   height: 10,
@@ -126,8 +184,9 @@ class _ProfileGymState extends State<Setting> {
                     // )
                   ],
                 ),
+                mySeparated(),
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Text(
                   'Personal',
@@ -148,7 +207,9 @@ class _ProfileGymState extends State<Setting> {
                       ),
                     ),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          navigate(context, Changeusername());
+                        },
                         icon: Icon(Icons.account_circle_outlined))
                   ],
                 ),
@@ -168,7 +229,9 @@ class _ProfileGymState extends State<Setting> {
                       ),
                     ),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          navigate(context, Changepassword());
+                        },
                         icon: Icon(Icons.change_circle_rounded))
                   ],
                 ),
@@ -188,13 +251,12 @@ class _ProfileGymState extends State<Setting> {
             ),
           ));
         },
-        listener: (context,state) {}
-        );
+        listener: (context, state) {});
   }
 
-  void _showEditDialog(BuildContext context) {
-    TextEditingController controller =
-        TextEditingController(text: kcalGoal.toString());
+  void showEditKcal(BuildContext context) {
+    TextEditingController controller = TextEditingController(
+        text: cubit.userModel!.target_calories.toString());
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -226,7 +288,12 @@ class _ProfileGymState extends State<Setting> {
           TextButton(
             onPressed: () {
               setState(() {
-                kcalGoal = int.tryParse(controller.text) ?? kcalGoal;
+                cubit.userModel!.target_calories =
+                    double.tryParse(controller.text) ??
+                        cubit.userModel!.target_calories;
+                cubit.postCalories(data: {
+                  'target_calories': cubit.userModel!.target_calories
+                });
               });
               Navigator.pop(context);
             },
@@ -242,4 +309,14 @@ class _ProfileGymState extends State<Setting> {
       ),
     );
   }
+
+  DropdownMenuItem<String> changeGender(String gender) => DropdownMenuItem(
+      value: gender,
+      child: Text(
+        gender,
+        style: Theme.of(context)
+            .textTheme
+            .bodyMedium!
+            .copyWith(color: Colors.grey),
+      ));
 }

@@ -43,6 +43,8 @@ dependencies:
   carousel_slider: ^5.0.0
   lottie: ^3.2.0
   flutter_local_notifications: ^19.4.0
+  another_flushbar: ^1.12.30
+
 
 
 dev_dependencies:
