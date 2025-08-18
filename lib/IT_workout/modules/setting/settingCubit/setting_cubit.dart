@@ -6,19 +6,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SettingCubit extends BaseCubit<SettingStates> {
   SettingCubit() : super(InitialState());
   static SettingCubit get(context) => BlocProvider.of(context);
+  PostGetUserData? userModel1;
   PostGetUserData? userModel;
   Future<void> getSetting() async {
     fetchData(
-        path: '',
+        path: '/api/user/login',
+        header: {"Authorization": "Bearer $baseToken"},
         errorMessage: 'from setting ',
         successState: SuccessSettingState(),
         errorState: ErrorSettingState(),
         loadingState: LoadingSettingState(),
-        fromJson: (fromJson) {},
-        onSuccess: (onSuccess) {});
+        fromJson: (fromjson) {
+          return PostGetUserData.fromJson(fromjson);
+        },
+        onSuccess: (onSuccess) {
+          userModel = onSuccess;
+        });
   }
-    Future<void> postCalories({
-    required Map <String,dynamic> data,
+
+  Future<void> postCalories({
+    required Map<String, dynamic> data,
   }) async {
     PostData(
         path: '/api/user/updateTargetCalories',
@@ -32,8 +39,7 @@ class SettingCubit extends BaseCubit<SettingStates> {
           return PostGetUserData.fromJson(fromjson);
         },
         onSuccess: (model) {
-          userModel = model;
+          userModel1 = model;
         });
   }
 }
-

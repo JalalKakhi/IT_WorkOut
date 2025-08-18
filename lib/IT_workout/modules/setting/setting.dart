@@ -4,6 +4,7 @@ import 'package:IT_workout/IT_workout/modules/change_username.dart/changeUsernam
 import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_cubit.dart';
 import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_states.dart';
 import 'package:IT_workout/IT_workout/shared/combonents/combontents.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,234 +23,243 @@ class _ProfileGymState extends State<Setting> {
         builder: (context, state) {
           final gender = ['Male', 'Female'];
           cubit = SettingCubit.get(context);
-          return Scaffold(
-              body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Set your work out informations ',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(color: Colors.red),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
+          return ConditionalBuilder(
+            condition: state is LoadingSettingState,
+            builder: (BuildContext context) {
+              return Scaffold(
+                  body: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Text(
-                        'Kcal goal',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16),
-                      ),
+                    Text(
+                      'Set your work out informations ',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.red),
                     ),
-                    GestureDetector(
-                        onTap: () => showEditKcal(context),
-                        child: Text('${cubit.userModel?.target_calories}',
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Kcal goal',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                        ),
+                        GestureDetector(
+                            onTap: () => showEditKcal(context),
+                            child: Text('${cubit.userModel?.target_calories}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(color: Colors.grey))),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    mySeparated(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            ' Your birthday',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                        ),
+                        GestureDetector(
+                            onTap: () => showEditKcal(context),
+                            child: Text('${cubit.userModel?.target_calories}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(color: Colors.grey))),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    mySeparated(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Your gender',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
-                                .copyWith(color: Colors.grey))),
-                  ],
-                ),
-                SizedBox(height: 10),
-                mySeparated(),
-                SizedBox(
-                  height: 10,
-                ),
-                                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        ' Your birthday',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16),
-                      ),
+                                .copyWith(color: Colors.grey),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 4)),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                                value: cubit.userModel!.gender,
+                                items: gender.map(changeGender).toList(),
+                                onChanged: (value) => setState(() {
+                                      cubit.userModel!.gender = value;
+                                    })),
+                          ),
+                        ),
+                      ],
                     ),
-                    GestureDetector(
-                        onTap: () => showEditKcal(context),
-                        child: Text('${cubit.userModel?.target_calories}',
+                    SizedBox(
+                      height: 10,
+                    ),
+                    mySeparated(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'BMI',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
-                                .copyWith(color: Colors.grey))),
+                                .copyWith(color: Colors.grey),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            navigate(context, Bmi());
+                          },
+                          child: Text('${cubit.userModel?.BMI}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(color: Colors.grey)),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    mySeparated(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Time reminder',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.grey),
+                          ),
+                        ),
+                        // TextButton(
+                        //     onPressed: (){
+                        //       Navigator.of(context).push(showPicker(
+                        //         context: context,
+                        //           value: _time,
+                        //           is24HrFormat: true,
+                        //           iosStylePicker: true,
+                        //           minuteInterval:TimePickerInterval.FIVE ,
+                        //           onChange: (Time time ){
+                        //         setState(() {
+                        //           _time = time;
+                        //         });
+                        //       }
+                        //       ));
+                        //     },
+                        //     child: Text('${_time}',style: TextStyle(
+                        //         color: Colors.grey,
+                        //         fontWeight: FontWeight.w600,
+                        //         fontSize: 16
+                        //     ),
+                        //     )
+                        // )
+                      ],
+                    ),
+                    mySeparated(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Personal',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: Colors.red),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Change  your User name information',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.grey),
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              navigate(context, Changeusername());
+                            },
+                            icon: Icon(Icons.account_circle_outlined))
+                      ],
+                    ),
+                    mySeparated(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Change password',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.grey),
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              navigate(context, Changepassword());
+                            },
+                            icon: Icon(Icons.change_circle_rounded))
+                      ],
+                    ),
+                    mySeparated(),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      'Note : if you face any problem just chat and explain your problem --> +9634564654',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.red,
+                          ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    )
                   ],
                 ),
-              SizedBox(height: 10), 
-                mySeparated(),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Your gender',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: Colors.grey),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 4)),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                            value: cubit.userModel!.gender,
-                            items: gender.map(changeGender).toList(),
-                            onChanged: (value) => setState(() {
-                                  cubit.userModel!.gender = value;
-                                  
-                                })),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                mySeparated(),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'BMI',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: Colors.grey),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        navigate(context, Bmi());
-                      },
-                      child: Text('${cubit.userModel?.BMI}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.grey)),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                mySeparated(),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Time reminder',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: Colors.grey),
-                      ),
-                    ),
-                    // TextButton(
-                    //     onPressed: (){
-                    //       Navigator.of(context).push(showPicker(
-                    //         context: context,
-                    //           value: _time,
-                    //           is24HrFormat: true,
-                    //           iosStylePicker: true,
-                    //           minuteInterval:TimePickerInterval.FIVE ,
-                    //           onChange: (Time time ){
-                    //         setState(() {
-                    //           _time = time;
-                    //         });
-                    //       }
-                    //       ));
-                    //     },
-                    //     child: Text('${_time}',style: TextStyle(
-                    //         color: Colors.grey,
-                    //         fontWeight: FontWeight.w600,
-                    //         fontSize: 16
-                    //     ),
-                    //     )
-                    // )
-                  ],
-                ),
-                mySeparated(),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Personal',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(color: Colors.red),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Change  your User name information',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: Colors.grey),
-                      ),
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          navigate(context, Changeusername());
-                        },
-                        icon: Icon(Icons.account_circle_outlined))
-                  ],
-                ),
-                mySeparated(),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Change password',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: Colors.grey),
-                      ),
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          navigate(context, Changepassword());
-                        },
-                        icon: Icon(Icons.change_circle_rounded))
-                  ],
-                ),
-                mySeparated(),
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  'Note : if you face any problem just chat and explain your problem --> +9634564654',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Colors.red,
-                      ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                )
-              ],
-            ),
-          ));
+              ));
+            },
+            fallback: (BuildContext context) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          );
         },
         listener: (context, state) {});
   }

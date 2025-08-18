@@ -19,301 +19,335 @@ class _MyWidgetState extends State<Bmi> {
     return BlocConsumer<BmiCubit, BmiStates>(
         builder: (context, state) {
           var cubit = BmiCubit.get(context);
-          bool isMale = cubit.userModel?.gender == "Male" ? true : false;
+          bool isMale = cubit.userModel?.data!.gender == "Male" ? true : false;
           int age = 18;
-          return Scaffold(
-            appBar: AppBar(
-              titleSpacing: 75,
-              title: Text(
-                'Colculate your bmi to track your progres',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-              ),
-            ),
-            body: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isMale = true;
-                            });
-                          },
-                          child: Container(
-                            height: 130,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: isMale ? Colors.grey : Colors.white),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image(
-                                  image: AssetImage(
-                                      'assets/image/IMG-20241120-WA0001.jpg'),
-                                  height: 70,
-                                  width: 70,
-                                  fit: BoxFit.cover,
-                                  color: Colors.red,
-                                ),
-                                Text(
-                                  'MALE',
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.normal),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isMale = false;
-                            });
-                          },
-                          child: Container(
-                            height: 130,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: !isMale ? Colors.grey : Colors.white),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image(
-                                  image: AssetImage(
-                                      'assets/image/IMG-20241120-WA0000.jpg'),
-                                  height: 70,
-                                  width: 70,
-                                  color: Colors.red,
-                                  fit: BoxFit.cover,
-                                ),
-                                Text(
-                                  'FAMALE',
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.normal),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+          return ConditionalBuilder(
+            condition: state is LoadingBmiState,
+            builder: (BuildContext context) {
+              return Scaffold(
+                appBar: AppBar(
+                  titleSpacing: 75,
+                  title: Text(
+                    'Colculate your bmi to track your progres',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.red),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    width: double.infinity,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.grey),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Hight',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900, fontSize: 30),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
+                body: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isMale = true;
+                                });
+                              },
+                              child: Container(
+                                height: 130,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: isMale ? Colors.red : Colors.grey),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.male_outlined,
+                                      color: Colors.black,
+                                      size: 70,
+                                    ),
+                                    Text(
+                                      'MALE',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(color: Colors.black),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isMale = false;
+                                });
+                              },
+                              child: Container(
+                                height: 130,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: !isMale ? Colors.red : Colors.grey),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    // Image(
+                                    //   image:,
+                                    //   height: 70,
+                                    //   width: 70,
+                                    //   color: Colors.black,
+                                    //   fit: BoxFit.cover,
+                                    // ),
+                                    Icon(
+                                      Icons.female_outlined,
+                                      color: Colors.black,
+                                      size: 70,
+                                    ),
+                                    Text(
+                                      'FEMALE',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(color: Colors.black),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        width: double.infinity,
+                        height: 200,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.grey),
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
                           children: [
                             Text(
-                              '${cubit.userModel?.tall}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w900, fontSize: 30),
+                              'Hight',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(color: Colors.black),
                             ),
-                            Text(
-                              'cm',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 10),
+                            SizedBox(
+                              height: 15,
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: [
+                                Text(
+                                  '${cubit.userModel?.data!.tall}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(color: Colors.black),
+                                ),
+                                Text(
+                                  'cm',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Slider(
+                              onChanged: (value) {
+                                setState(() {
+                                  cubit.userModel?.data!.tall = value.toInt();
+                                });
+                              },
+                              value: cubit.userModel!.data!.tall!.toDouble(),
+                              min: 100,
+                              max: 220,
+                              activeColor: Colors.red,
+                            )
                           ],
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Slider(
-                          onChanged: (value) {
-                            setState(() {
-                              cubit.userModel?.tall = value.toInt();
-                            });
-                          },
-                          value: cubit.userModel!.tall!.toDouble(),
-                          min: 100,
-                          max: 220,
-                        )
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 190,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Colors.grey),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'AGE',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900, fontSize: 30),
-                              ),
-                              Text(
-                                '${age}',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900, fontSize: 30),
-                              ),
-                              Row(
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 190,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.grey),
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  FloatingActionButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        age--;
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.remove,
-                                      color: Colors.red,
-                                    ),
-                                    mini: true,
+                                  Text(
+                                    'AGE',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(color: Colors.black),
                                   ),
-                                  FloatingActionButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        age++;
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.add,
-                                      color: Colors.red,
-                                    ),
-                                    mini: true,
+                                  Text(
+                                    '${age}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(color: Colors.black),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      FloatingActionButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            age--;
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.remove,
+                                          color: Colors.red,
+                                        ),
+                                        mini: true,
+                                      ),
+                                      FloatingActionButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            age++;
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.red,
+                                        ),
+                                        mini: true,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 190,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Colors.grey),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'WEIGHT',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 30,
-                                    color: Colors.white),
-                              ),
-                              Text(
-                                '${cubit.userModel?.weight}',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900, fontSize: 30),
-                              ),
-                              Row(
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: Container(
+                              height: 190,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.grey),
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  FloatingActionButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        cubit.userModel!.weight =
-                                            cubit.userModel!.weight! - 1;
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.remove,
-                                      color: Colors.red,
-                                    ),
-                                    mini: true,
+                                  Text(
+                                    'WEIGHT',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(color: Colors.black),
                                   ),
-                                  FloatingActionButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        cubit.userModel!.weight =
-                                            cubit.userModel!.weight! + 1;
-                                      });
-                                    },
-                                    child: Icon(Icons.add, color: Colors.red),
-                                    mini: true,
+                                  Text(
+                                    '${cubit.userModel?.data!.weight}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(color: Colors.black),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      FloatingActionButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            cubit.userModel!.data!.weight =
+                                                cubit.userModel!.data!.weight! -
+                                                    1;
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.remove,
+                                          color: Colors.red,
+                                        ),
+                                        backgroundColor: Colors.black,
+                                        mini: true,
+                                      ),
+                                      FloatingActionButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            cubit.userModel!.data!.weight =
+                                                cubit.userModel!.data!.weight! +
+                                                    1;
+                                          });
+                                        },
+                                        child:
+                                            Icon(Icons.add, color: Colors.red),
+                                        backgroundColor: Colors.black,
+                                        mini: true,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: ConditionalBuilder(
+                          condition: state is LoadingBmiState,
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.red),
+                              child: MaterialButton(
+                                onPressed: () {
+                                  cubit.postBmi(data: {
+                                    "tall": cubit.userModel!.data!.tall!,
+                                    "weight": cubit.userModel!.data!.weight!
+                                  });
+                                  if (state is SuccessBmiState)
+                                    navigateAndReplace(context, LayoutScreen());
+                                },
+                                child: Text('Colculate',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          color: Colors.grey,
+                                        )),
+                              ),
+                            );
+                          },
+                          fallback: (BuildContext context) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        )),
+                  ],
                 ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: ConditionalBuilder(
-                      condition: state is LoadingBmiState,
-                      builder: (BuildContext context) {
-                        return Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Colors.red),
-                          child: MaterialButton(
-                            onPressed: () {
-                              cubit.postBmi(data: {
-                                "tall": cubit.userModel!.tall!,
-                                "weight": cubit.userModel!.weight!
-                              });
-                              if (state is SuccessBmiState)
-                                navigateAndReplace(context, LayoutScreen());
-                            },
-                            child: Text('Colculate',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      color: Colors.grey,
-                                    )),
-                          ),
-                        );
-                      },
-                      fallback: (BuildContext context) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                    )),
-              ],
-            ),
+              );
+            },
+            fallback: (BuildContext context) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
           );
         },
         listener: (context, state) {});

@@ -7,8 +7,8 @@ class BmiCubit extends BaseCubit<BmiStates> {
   BmiCubit() : super(InitialBmiState());
   static BmiCubit get(context) => BlocProvider.of(context);
 
-  PostGetUserData? userModel;
-  PostGetUserModel? userModel1;
+  PostGetUserModel? userModel;
+  PostGetUserData? userModel1;
   Future<void> postBmi({
     required Map<String, dynamic> data,
   }) async {
@@ -21,17 +21,18 @@ class BmiCubit extends BaseCubit<BmiStates> {
         loadingState: LoadingBmiState(),
         fromJson: (fromJson) {
           return PostGetUserData.fromJson(fromJson);
-          
         },
         onSuccess: (model) {
-          userModel = model;
+          userModel1 = model;
         },
         data: data);
   }
-    Future<void> getUser() async {
+
+  Future<void> getBmi() async {
     fetchData(
         path: '/api/user/login',
         errorMessage: 'from Bmi ',
+        header: {"Authorization": "Bearer $baseToken"},
         successState: SuccessBmiState(),
         errorState: ErrorBmiState(),
         loadingState: LoadingBmiState(),
@@ -39,7 +40,7 @@ class BmiCubit extends BaseCubit<BmiStates> {
           return PostGetUserModel.fromJson(fromJson);
         },
         onSuccess: (onSuccess) {
-          userModel1 = onSuccess;
+          userModel = onSuccess;
         });
   }
 }

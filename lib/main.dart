@@ -17,7 +17,7 @@ void main() {
   Bloc.observer = MyBlocObserver();
   DioHelper.initial();
   runApp(const MyApp());
-  // NotiService().initNotifaction();
+  NotiService().initNotifaction();
 }
 
 class MyApp extends StatelessWidget {
