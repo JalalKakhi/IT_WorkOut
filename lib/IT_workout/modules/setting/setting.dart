@@ -55,7 +55,8 @@ class _ProfileGymState extends State<Setting> {
                         ),
                         GestureDetector(
                             onTap: () => showEditKcal(context),
-                            child: Text('${cubit.userModel?.target_calories}',
+                            child: Text(
+                                '${cubit.userModel?.data!.target_calories}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -80,7 +81,8 @@ class _ProfileGymState extends State<Setting> {
                         ),
                         GestureDetector(
                             onTap: () => showEditKcal(context),
-                            child: Text('${cubit.userModel?.target_calories}',
+                            child: Text(
+                                '${cubit.userModel?.data!.target_calories}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -108,10 +110,10 @@ class _ProfileGymState extends State<Setting> {
                               border: Border.all(color: Colors.grey, width: 4)),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
-                                value: cubit.userModel!.gender,
+                                value: cubit.userModel!.data!.gender,
                                 items: gender.map(changeGender).toList(),
                                 onChanged: (value) => setState(() {
-                                      cubit.userModel!.gender = value;
+                                      cubit.userModel!.data!.gender = value;
                                     })),
                           ),
                         ),
@@ -139,7 +141,7 @@ class _ProfileGymState extends State<Setting> {
                           onPressed: () {
                             navigate(context, Bmi());
                           },
-                          child: Text('${cubit.userModel?.BMI}',
+                          child: Text('${cubit.userModel?.data!.BMI}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -266,7 +268,7 @@ class _ProfileGymState extends State<Setting> {
 
   void showEditKcal(BuildContext context) {
     TextEditingController controller = TextEditingController(
-        text: cubit.userModel!.target_calories.toString());
+        text: cubit.userModel!.data!.target_calories.toString());
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -298,11 +300,11 @@ class _ProfileGymState extends State<Setting> {
           TextButton(
             onPressed: () {
               setState(() {
-                cubit.userModel!.target_calories =
+                cubit.userModel!.data!.target_calories =
                     double.tryParse(controller.text) ??
-                        cubit.userModel!.target_calories;
+                        cubit.userModel!.data!.target_calories;
                 cubit.postCalories(data: {
-                  'target_calories': cubit.userModel!.target_calories
+                  'target_calories': cubit.userModel!.data!.target_calories
                 });
               });
               Navigator.pop(context);

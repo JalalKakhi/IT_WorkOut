@@ -7,7 +7,7 @@ class SettingCubit extends BaseCubit<SettingStates> {
   SettingCubit() : super(InitialState());
   static SettingCubit get(context) => BlocProvider.of(context);
   PostGetUserData? userModel1;
-  PostGetUserData? userModel;
+  PostGetUserModel? userModel;
   Future<void> getSetting() async {
     fetchData(
         path: '/api/user/login',
@@ -17,7 +17,7 @@ class SettingCubit extends BaseCubit<SettingStates> {
         errorState: ErrorSettingState(),
         loadingState: LoadingSettingState(),
         fromJson: (fromjson) {
-          return PostGetUserData.fromJson(fromjson);
+          return PostGetUserModel.fromJson(fromjson);
         },
         onSuccess: (onSuccess) {
           userModel = onSuccess;
@@ -41,5 +41,24 @@ class SettingCubit extends BaseCubit<SettingStates> {
         onSuccess: (model) {
           userModel1 = model;
         });
+  }
+
+  Future<void> postBmi({
+    required Map<String, dynamic> data,
+  }) async {
+    PostData(
+        path: '/api/user/editBMI',
+        errorMessage: "From bmi ",
+        header: {"Authorization": "Bearer $baseToken"},
+        successState: SuccessBmiState(),
+        errorState: ErrorBmiState(),
+        loadingState: LoadingBmiState(),
+        fromJson: (fromJson) {
+          return PostGetUserData.fromJson(fromJson);
+        },
+        onSuccess: (model) {
+          userModel1 = model;
+        },
+        data: data);
   }
 }
