@@ -85,6 +85,11 @@ class Changepassword extends StatelessWidget {
                             return defultButtom(
                                 function: () {
                                   if (formKey.currentState!.validate()) {
+                                    cubit.postPassword(data: {
+                                      'password': cubit.confirmPasswordControlar
+                                    });
+                                  }
+                                  if (cubit.userModel != null) {
                                     Flushbar(
                                       title: 'Home work out',
                                       message: cubit.userModel!.message,
@@ -122,12 +127,14 @@ class Changepassword extends StatelessWidget {
                                               : null,
                                       showProgressIndicator: true,
                                     ).show(context);
-                                    cubit.postPassword(data: {
-                                      'password': cubit.confirmPasswordControlar
-                                    });
                                   }
+
                                   if (State is SuccessChangePasswordState)
-                                    navigateAndReplace(context, LayoutScreen());
+                                    navigateAndReplace(
+                                        context,
+                                        LayoutScreen(
+                                          screenIndex: 3,
+                                        ));
                                 },
                                 text: 'UPDATE',
                                 textStyle: Theme.of(context)

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 abstract class BaseCubit<T> extends Cubit<T> {
   BaseCubit(T initialState) : super(initialState);
 
-  String baseToken = "71|1IBuJ5O3gSuG3X9RIVaN1B6H0iH1MPtntX0K62Ys0d4a480a";
+  String baseToken = "74|fYEIgyKCfmF1bNSUHWgy3gpipLM3VFDNqlHTmYEQ740441ea";
 
   Future<void> fetchData<R>({
     required String path,

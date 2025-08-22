@@ -1,8 +1,8 @@
 import 'package:IT_workout/IT_workout/layout/cubit/layout_cubit.dart';
 import 'package:IT_workout/IT_workout/layout/layout_screen.dart';
-import 'package:IT_workout/IT_workout/modules/bmi/bmiCubit/bmi_cubit.dart';
 import 'package:IT_workout/IT_workout/modules/change_password.dart/changePassword.dart';
 import 'package:IT_workout/IT_workout/modules/change_password.dart/change_password_cubit.dart/changePasswordCubit.dart';
+import 'package:IT_workout/IT_workout/modules/change_username.dart/change_username_cubit.dart/changeUsernameCubit.dart';
 import 'package:IT_workout/IT_workout/modules/homeGym/homeCubit/home_cubit.dart';
 import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_cubit.dart';
 import 'package:IT_workout/IT_workout/shared/bloc_observer.dart';
@@ -13,11 +13,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioHelper.initial();
   runApp(const MyApp());
-  NotiService().initNotifaction();
+  // NotiService().initNotifaction();
 }
 
 class MyApp extends StatelessWidget {
@@ -33,9 +33,9 @@ class MyApp extends StatelessWidget {
             create: (context) => HomeCubit()
               ..getPlan()
               ..getCategories()),
-        BlocProvider(create: (context) => SettingCubit()),
-        BlocProvider(create: (context) => BmiCubit()),
+        BlocProvider(create: (context) => SettingCubit()..getSetting()),
         BlocProvider(create: (context) => Changepasswordcubit()),
+        BlocProvider(create: (context) => Changeusernamecubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

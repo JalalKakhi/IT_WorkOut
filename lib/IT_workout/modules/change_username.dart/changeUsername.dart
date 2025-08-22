@@ -2,6 +2,7 @@ import 'package:IT_workout/IT_workout/layout/layout_screen.dart';
 import 'package:IT_workout/IT_workout/modules/change_username.dart/change_username_cubit.dart/changeUsernameCubit.dart';
 import 'package:IT_workout/IT_workout/modules/change_username.dart/change_username_cubit.dart/changeUsernameState.dart';
 import 'package:IT_workout/IT_workout/shared/combonents/combontents.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +27,7 @@ class Changeusername extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                     Text('Change your username',
+                        Text('Change your username',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -58,7 +59,8 @@ class Changeusername extends StatelessWidget {
                               if (value == null || value.isEmpty) {
                                 return 'Confirm username field must be not empty';
                               }
-                             if (cubit.confirmUsernameControlar != cubit.UsernameControlar) {
+                              if (cubit.confirmUsernameControlar !=
+                                  cubit.UsernameControlar) {
                                 return 'Confirm username field must be the same of the user name field';
                               }
                               return null;
@@ -72,14 +74,57 @@ class Changeusername extends StatelessWidget {
                             return defultButtom(
                                 function: () {
                                   if (formKey.currentState!.validate()) {
-                                    cubit.postusername(data: {
-                                      'name': cubit.confirmUsernameControlar
-                                    },
-                                     
-                                     );
+                                    cubit.postusername(
+                                      data: {
+                                        'name': cubit.confirmUsernameControlar
+                                      },
+                                    );
                                   }
-                                  if(State is SuccessChangeUsernameState)
-                                navigateAndReplace(context, LayoutScreen());
+                                  if (cubit.userModel != null) {
+                                    Flushbar(
+                                      title: 'Home work out',
+                                      message: cubit.userModel!.message,
+                                      duration: const Duration(seconds: 3),
+                                      flushbarPosition: FlushbarPosition.BOTTOM,
+                                      flushbarStyle: FlushbarStyle.FLOATING,
+                                      reverseAnimationCurve: Curves.decelerate,
+                                      forwardAnimationCurve: Curves.elasticOut,
+                                      backgroundColor:
+                                          state is ErrorChangeUsernameState
+                                              ? Colors.red
+                                              : Colors.green,
+                                      boxShadows: [
+                                        BoxShadow(
+                                          color:
+                                              state is ErrorChangeUsernameState
+                                                  ? Colors.red
+                                                  : Colors.green,
+                                          offset: Offset(0, 2),
+                                        )
+                                      ],
+                                      isDismissible: false,
+                                      icon: Icon(
+                                        state is ErrorChangeUsernameState
+                                            ? Icons.check
+                                            : Icons.abc_sharp,
+                                        color: state is ErrorChangeUsernameState
+                                            ? Colors.red
+                                            : Colors.green,
+                                      ),
+                                      // mainButton: ,
+                                      progressIndicatorBackgroundColor:
+                                          state is SuccessChangeUsernameState
+                                              ? Colors.green
+                                              : null,
+                                      showProgressIndicator: true,
+                                    ).show(context);
+                                  }
+                                  if (State is SuccessChangeUsernameState)
+                                    navigateAndReplace(
+                                        context,
+                                        LayoutScreen(
+                                          screenIndex: 3,
+                                        ));
                                 },
                                 text: 'UPDATE',
                                 textStyle: Theme.of(context)
@@ -89,14 +134,14 @@ class Changeusername extends StatelessWidget {
                                 color: Colors.red);
                           },
                           fallback: (BuildContext context) {
-                           return Center(
+                            return Center(
                               child: CircularProgressIndicator(),
                             );
                           },
                         ),
-                        SizedBox(height: 15.0,),
-                          
-                        
+                        SizedBox(
+                          height: 15.0,
+                        ),
                       ],
                     ),
                   ),

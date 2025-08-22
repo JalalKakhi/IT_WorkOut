@@ -22,6 +22,7 @@ class _ProfileGymState extends State<Setting> {
     return BlocConsumer<SettingCubit, SettingStates>(
         builder: (context, state) {
           final gender = ['Male', 'Female'];
+          final levels = ['Biggner', 'Intermadite','Advanced'];
           cubit = SettingCubit.get(context);
           return ConditionalBuilder(
             condition: state is LoadingSettingState,
@@ -56,7 +57,7 @@ class _ProfileGymState extends State<Setting> {
                         GestureDetector(
                             onTap: () => showEditKcal(context),
                             child: Text(
-                                '${cubit.userModel?.data!.target_calories}',
+                                '${cubit.userModel?.data!.target_calories??'0'}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -79,14 +80,6 @@ class _ProfileGymState extends State<Setting> {
                                 fontSize: 16),
                           ),
                         ),
-                        GestureDetector(
-                            onTap: () => showEditKcal(context),
-                            child: Text(
-                                '${cubit.userModel?.data!.target_calories}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(color: Colors.grey))),
                       ],
                     ),
                     SizedBox(height: 10),
@@ -110,8 +103,40 @@ class _ProfileGymState extends State<Setting> {
                               border: Border.all(color: Colors.grey, width: 4)),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
-                                value: cubit.userModel!.data!.gender,
+                                value: cubit.userModel!.data!.gender??'Male',
                                 items: gender.map(changeGender).toList(),
+                                onChanged: (value) => setState(() {
+                                      cubit.userModel!.data!.gender = value;
+                                    })),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    mySeparated(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Your level',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.grey),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 4)),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                                value: cubit.userModel!.data!.gender??'Biggner',
+                                items: levels.map(changeLevel).toList(),
                                 onChanged: (value) => setState(() {
                                       cubit.userModel!.data!.gender = value;
                                     })),
@@ -141,7 +166,7 @@ class _ProfileGymState extends State<Setting> {
                           onPressed: () {
                             navigate(context, Bmi());
                           },
-                          child: Text('${cubit.userModel?.data!.BMI}',
+                          child: Text('${cubit.userModel?.data!.BMI??'0'}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -326,6 +351,15 @@ class _ProfileGymState extends State<Setting> {
       value: gender,
       child: Text(
         gender,
+        style: Theme.of(context)
+            .textTheme
+            .bodyMedium!
+            .copyWith(color: Colors.grey),
+      ));
+        DropdownMenuItem<String> changeLevel(String level) => DropdownMenuItem(
+      value: level,
+      child: Text(
+        level,
         style: Theme.of(context)
             .textTheme
             .bodyMedium!

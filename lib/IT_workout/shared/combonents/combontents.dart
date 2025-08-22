@@ -157,6 +157,7 @@ Widget defultTextFormField(
         IconData? sufIcon,
         ValueChanged? onChanged,
         required String? Function(String?) validate,
+        Color? colors,
         VoidCallback? suf_function}) =>
     Container(
       width: width,
@@ -167,7 +168,7 @@ Widget defultTextFormField(
         onChanged: onChanged,
         decoration: InputDecoration(
             labelText: labelText,
-            border: OutlineInputBorder(),
+            border: OutlineInputBorder(borderSide: BorderSide(color:colors! )),
             prefixIcon: preIcon,
             suffixIcon:
                 IconButton(onPressed: suf_function, icon: Icon(sufIcon))),
@@ -196,3 +197,104 @@ Widget defultButtom(
         child: Text(isUpper ? text.toUpperCase() : text, style: textStyle),
       ),
     );
+    
+  Widget datePickerScreen({
+    context , 
+    required String hintText,
+    required String label,
+    required TextEditingController controller,
+    required bool isObscure,
+    required VoidCallback onTap,
+    required TextInputType textInputType,
+    required String? Function(String?)? validate,
+    required VoidCallback setState,
+  }) => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontFamily: 'Roboto',
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.05),
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    inputDecorationTheme: InputDecorationTheme(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                      hintStyle: TextStyle(color: Colors.grey.shade500),
+                    ),
+                  ),
+                 child:
+  GestureDetector(
+                    onTap: ()async{
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: Colors.red.shade700,
+              surface: Colors.black,
+            ),
+            dialogBackgroundColor: Colors.black.withOpacity(0.9),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+        controller.text = "${picked.day}/${picked.month}/${picked.year}";
+      
+    }
+  },
+                    child: AbsorbPointer(
+                      child: defultTextFormField(
+                        controlar: controller,
+                        labelText: hintText,
+                        isObscure: isObscure,
+                        textInputType:textInputType ,
+                         validate: (v){},
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Container(
+              width: 100, // Maintains alignment with unit dropdowns
+            ),
+          ],
+        ),
+      ],
+    );
+
+    
+  

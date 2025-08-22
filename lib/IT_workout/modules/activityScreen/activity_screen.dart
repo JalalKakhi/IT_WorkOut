@@ -4,7 +4,10 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 
 class ActivityScreen extends StatelessWidget {
-  Widget giveKcalIndicator()=>Container(
+  Widget giveKcalIndicator({
+    required String target_kcal,
+    required String kcal,
+  })=>Container(
     child: new CircularPercentIndicator(
       radius: 110.0,
       animation: true,
@@ -15,7 +18,7 @@ class ActivityScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.local_fire_department,size: 50,),
-          Text("55/200 KCAL",style: TextStyle(fontSize: 20),)
+          Text("${kcal??'0'}/${target_kcal??'0'} KCAL",style: TextStyle(fontSize: 20),)
         ],
       ),
       circularStrokeCap: CircularStrokeCap.round,
@@ -87,7 +90,7 @@ class ActivityScreen extends StatelessWidget {
       child: ListView(
         children: [
           // kalories indicator
-          giveKcalIndicator(),
+          giveKcalIndicator(kcal: '',target_kcal: ''),
           // daily goal
           giveDailyGoalSection(),
           SizedBox(
