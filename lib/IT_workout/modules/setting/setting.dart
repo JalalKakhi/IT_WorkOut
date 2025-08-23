@@ -1,6 +1,7 @@
 import 'package:IT_workout/IT_workout/modules/bmi/bmi.dart';
 import 'package:IT_workout/IT_workout/modules/change_password.dart/changePassword.dart';
 import 'package:IT_workout/IT_workout/modules/change_username.dart/changeUsername.dart';
+import 'package:IT_workout/IT_workout/modules/date_picker.dart/date_picker_screen.dart';
 import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_cubit.dart';
 import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_states.dart';
 import 'package:IT_workout/IT_workout/shared/combonents/combontents.dart';
@@ -22,7 +23,7 @@ class _ProfileGymState extends State<Setting> {
     return BlocConsumer<SettingCubit, SettingStates>(
         builder: (context, state) {
           final gender = ['Male', 'Female'];
-          final levels = ['Biggner', 'Intermadite','Advanced'];
+          final levels = ['Biggner', 'Intermadite', 'Advanced'];
           cubit = SettingCubit.get(context);
           return ConditionalBuilder(
             condition: state is LoadingSettingState,
@@ -41,23 +42,23 @@ class _ProfileGymState extends State<Setting> {
                           .copyWith(color: Colors.red),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     Row(
                       children: [
                         Expanded(
                           child: Text(
                             'Kcal goal',
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.grey),
                           ),
                         ),
                         GestureDetector(
                             onTap: () => showEditKcal(context),
                             child: Text(
-                                '${cubit.userModel?.data!.target_calories??'0'}',
+                                '${cubit.userModel?.data!.target_calories ?? '0'}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -74,12 +75,27 @@ class _ProfileGymState extends State<Setting> {
                         Expanded(
                           child: Text(
                             ' Your birthday',
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.grey),
                           ),
                         ),
+                        DatePickerScreen(
+                          controller: cubit.dobController!,
+                          label: 'Date of Birth',
+                          hintText: cubit.userModel!.data!.date_of_birth! ??
+                              'YYYY-MM-DD',
+                          onTap: () =>
+                              _selectDate(context, cubit.dobController),
+                        ),
+                        //       DatePickerField(
+                        //         controller: _dobController,
+                        //         label: 'Date of Birth',
+                        //         hintText: 'DD/MM/YYYY',
+                        //         onTap: () => _selectDate(context),
+
+                        // )
                       ],
                     ),
                     SizedBox(height: 10),
@@ -103,10 +119,15 @@ class _ProfileGymState extends State<Setting> {
                               border: Border.all(color: Colors.grey, width: 4)),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
-                                value: cubit.userModel!.data!.gender??'Male',
+                                value: cubit.userModel!.data!.gender ?? 'Male',
                                 items: gender.map(changeGender).toList(),
                                 onChanged: (value) => setState(() {
                                       cubit.userModel!.data!.gender = value;
+                                      cubit.postGender(data: {
+                                        'gender':
+                                            cubit.userModel!.data!.gender ??
+                                                value
+                                      });
                                     })),
                           ),
                         ),
@@ -119,7 +140,7 @@ class _ProfileGymState extends State<Setting> {
                     SizedBox(
                       height: 10,
                     ),
-                  Row(
+                    Row(
                       children: [
                         Expanded(
                           child: Text(
@@ -135,10 +156,19 @@ class _ProfileGymState extends State<Setting> {
                               border: Border.all(color: Colors.grey, width: 4)),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
-                                value: cubit.userModel!.data!.gender??'Biggner',
+                                value: cubit.transIdToLevelName(
+                                    cubit.userModel!.data!.level_id ?? 1),
                                 items: levels.map(changeLevel).toList(),
                                 onChanged: (value) => setState(() {
-                                      cubit.userModel!.data!.gender = value;
+                                      cubit.userModel!.data!.level_id =
+                                          cubit.transLevelNameToId(
+                                              value ?? 'Biggner');
+                                      cubit.postLevel(data: {
+                                        'level_id':
+                                            cubit.userModel!.data!.level_id ??
+                                                cubit.transLevelNameToId(
+                                                    value ?? 'Biggner')
+                                      });
                                     })),
                           ),
                         ),
@@ -166,7 +196,7 @@ class _ProfileGymState extends State<Setting> {
                           onPressed: () {
                             navigate(context, Bmi());
                           },
-                          child: Text('${cubit.userModel?.data!.BMI??'0'}',
+                          child: Text('${cubit.userModel?.data!.BMI ?? '0'}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -224,6 +254,9 @@ class _ProfileGymState extends State<Setting> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(color: Colors.red),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     Row(
                       children: [
@@ -326,10 +359,11 @@ class _ProfileGymState extends State<Setting> {
             onPressed: () {
               setState(() {
                 cubit.userModel!.data!.target_calories =
-                    double.tryParse(controller.text) ??
+                    int.tryParse(controller.text) ??
                         cubit.userModel!.data!.target_calories;
                 cubit.postCalories(data: {
-                  'target_calories': cubit.userModel!.data!.target_calories
+                  'target_calories': cubit.userModel!.data!.target_calories ??
+                      int.tryParse(controller.text)
                 });
               });
               Navigator.pop(context);
@@ -356,7 +390,7 @@ class _ProfileGymState extends State<Setting> {
             .bodyMedium!
             .copyWith(color: Colors.grey),
       ));
-        DropdownMenuItem<String> changeLevel(String level) => DropdownMenuItem(
+  DropdownMenuItem<String> changeLevel(String level) => DropdownMenuItem(
       value: level,
       child: Text(
         level,
@@ -365,4 +399,35 @@ class _ProfileGymState extends State<Setting> {
             .bodyMedium!
             .copyWith(color: Colors.grey),
       ));
+  Future<void> _selectDate(BuildContext context, _dobController) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: Colors.red.shade700,
+              surface: Colors.black,
+            ),
+            dialogBackgroundColor: Colors.black.withOpacity(0.9),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      setState(() {
+        _dobController.text = "${picked.year}-${picked.month}-${picked.day}";
+        cubit.userModel!.data!.date_of_birth = _dobController;
+        cubit.postBirthday(data: {
+          'date_of_birth': _dobController.text ??
+              cubit.userModel!.data!.date_of_birth ??
+              '${picked.year}-${picked.month}-${picked.day}'
+        });
+      });
+    }
+  }
 }

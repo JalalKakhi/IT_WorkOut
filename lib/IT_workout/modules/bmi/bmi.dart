@@ -2,6 +2,7 @@ import 'package:IT_workout/IT_workout/layout/layout_screen.dart';
 import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_cubit.dart';
 import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_states.dart';
 import 'package:IT_workout/IT_workout/shared/combonents/combontents.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +43,29 @@ class _MyWidgetState extends State<Bmi> {
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
-                              isMale = true;
+                              Flushbar(
+                                title: 'Home work out',
+                                message:
+                                    'you should change your gender from the setting sceen',
+                                duration: const Duration(seconds: 3),
+                                flushbarPosition: FlushbarPosition.BOTTOM,
+                                flushbarStyle: FlushbarStyle.FLOATING,
+                                reverseAnimationCurve: Curves.decelerate,
+                                forwardAnimationCurve: Curves.elasticOut,
+                                backgroundColor: Colors.yellow,
+                                boxShadows: [
+                                  BoxShadow(
+                                    color: Colors.yellow,
+                                    offset: Offset(0, 2),
+                                  )
+                                ],
+                                isDismissible: false,
+                                icon: Icon(
+                                  Icons.error_outline,
+                                  color: Colors.yellow,
+                                ),
+                                showProgressIndicator: true,
+                              ).show(context);
                             });
                           },
                           child: Container(
@@ -77,7 +100,29 @@ class _MyWidgetState extends State<Bmi> {
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
-                              isMale = false;
+                              Flushbar(
+                                title: 'Home work out',
+                                message:
+                                    'you should change your gender from the setting sceen',
+                                duration: const Duration(seconds: 3),
+                                flushbarPosition: FlushbarPosition.BOTTOM,
+                                flushbarStyle: FlushbarStyle.FLOATING,
+                                reverseAnimationCurve: Curves.decelerate,
+                                forwardAnimationCurve: Curves.elasticOut,
+                                backgroundColor: Colors.yellow,
+                                boxShadows: [
+                                  BoxShadow(
+                                    color: Colors.yellow,
+                                    offset: Offset(0, 2),
+                                  )
+                                ],
+                                isDismissible: false,
+                                icon: Icon(
+                                  Icons.error_outline,
+                                  color: Colors.yellow,
+                                ),
+                                showProgressIndicator: true,
+                              ).show(context);
                             });
                           },
                           child: Container(
@@ -88,13 +133,6 @@ class _MyWidgetState extends State<Bmi> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // Image(
-                                //   image:,
-                                //   height: 70,
-                                //   width: 70,
-                                //   color: Colors.black,
-                                //   fit: BoxFit.cover,
-                                // ),
                                 Icon(
                                   Icons.female_outlined,
                                   color: Colors.black,
@@ -142,7 +180,7 @@ class _MyWidgetState extends State<Bmi> {
                           textBaseline: TextBaseline.alphabetic,
                           children: [
                             Text(
-                              '${cubit.userModel?.data!.tall}',
+                              '${cubit.userModel?.data!.tall ?? '150'}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -166,7 +204,7 @@ class _MyWidgetState extends State<Bmi> {
                               cubit.userModel?.data!.tall = value.toInt();
                             });
                           },
-                          value: cubit.userModel!.data!.tall!.toDouble(),
+                          value: cubit.userModel!.data!.tall!.toDouble() ?? 150,
                           min: 100,
                           max: 220,
                           activeColor: Colors.red,
@@ -196,7 +234,7 @@ class _MyWidgetState extends State<Bmi> {
                                     .copyWith(color: Colors.black),
                               ),
                               Text(
-                                '${age}',
+                                '${cubit.userModel!.data!.Age ?? 18}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -208,7 +246,32 @@ class _MyWidgetState extends State<Bmi> {
                                   FloatingActionButton(
                                     onPressed: () {
                                       setState(() {
-                                        age--;
+                                        Flushbar(
+                                          title: 'Home work out',
+                                          message:
+                                              'you should change your birth day from the setting sceen',
+                                          duration: const Duration(seconds: 3),
+                                          flushbarPosition:
+                                              FlushbarPosition.BOTTOM,
+                                          flushbarStyle: FlushbarStyle.FLOATING,
+                                          reverseAnimationCurve:
+                                              Curves.decelerate,
+                                          forwardAnimationCurve:
+                                              Curves.elasticOut,
+                                          backgroundColor: Colors.yellow,
+                                          boxShadows: [
+                                            BoxShadow(
+                                              color: Colors.yellow,
+                                              offset: Offset(0, 2),
+                                            )
+                                          ],
+                                          isDismissible: false,
+                                          icon: Icon(
+                                            Icons.error_outline,
+                                            color: Colors.yellow,
+                                          ),
+                                          showProgressIndicator: true,
+                                        ).show(context);
                                       });
                                     },
                                     child: Icon(
@@ -220,7 +283,32 @@ class _MyWidgetState extends State<Bmi> {
                                   FloatingActionButton(
                                     onPressed: () {
                                       setState(() {
-                                        age++;
+                                        Flushbar(
+                                          title: 'Home work out',
+                                          message:
+                                              'you should change your birth day from the setting sceen',
+                                          duration: const Duration(seconds: 3),
+                                          flushbarPosition:
+                                              FlushbarPosition.BOTTOM,
+                                          flushbarStyle: FlushbarStyle.FLOATING,
+                                          reverseAnimationCurve:
+                                              Curves.decelerate,
+                                          forwardAnimationCurve:
+                                              Curves.elasticOut,
+                                          backgroundColor: Colors.yellow,
+                                          boxShadows: [
+                                            BoxShadow(
+                                              color: Colors.yellow,
+                                              offset: Offset(0, 2),
+                                            )
+                                          ],
+                                          isDismissible: false,
+                                          icon: Icon(
+                                            Icons.error_outline,
+                                            color: Colors.yellow,
+                                          ),
+                                          showProgressIndicator: true,
+                                        ).show(context);
                                       });
                                     },
                                     child: Icon(
@@ -255,7 +343,7 @@ class _MyWidgetState extends State<Bmi> {
                                     .copyWith(color: Colors.black),
                               ),
                               Text(
-                                '${cubit.userModel?.data!.weight}',
+                                '${cubit.userModel?.data!.weight ?? 60}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -268,7 +356,9 @@ class _MyWidgetState extends State<Bmi> {
                                     onPressed: () {
                                       setState(() {
                                         cubit.userModel!.data!.weight =
-                                            cubit.userModel!.data!.weight! - 1;
+                                            cubit.userModel!.data!.weight! -
+                                                    1 ??
+                                                60;
                                       });
                                     },
                                     child: Icon(
@@ -282,7 +372,9 @@ class _MyWidgetState extends State<Bmi> {
                                     onPressed: () {
                                       setState(() {
                                         cubit.userModel!.data!.weight =
-                                            cubit.userModel!.data!.weight! + 1;
+                                            cubit.userModel!.data!.weight! +
+                                                    1 ??
+                                                60;
                                       });
                                     },
                                     child: Icon(Icons.add, color: Colors.red),
@@ -311,11 +403,15 @@ class _MyWidgetState extends State<Bmi> {
                           child: MaterialButton(
                             onPressed: () {
                               cubit.postBmi(data: {
-                                "tall": cubit.userModel!.data!.tall!,
-                                "weight": cubit.userModel!.data!.weight!
+                                "tall": cubit.userModel!.data!.tall! ?? 150,
+                                "weight": cubit.userModel!.data!.weight! ?? 60
                               });
                               if (state is SuccessBmiState)
-                                navigateAndReplace(context, LayoutScreen());
+                                navigateAndReplace(
+                                    context,
+                                    LayoutScreen(
+                                      screenIndex: 3,
+                                    ));
                             },
                             child: Text('Colculate',
                                 style: Theme.of(context)

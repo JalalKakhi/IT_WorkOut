@@ -39,6 +39,7 @@ class Changeusername extends StatelessWidget {
                             controlar: cubit.UsernameControlar,
                             textInputType: TextInputType.name,
                             labelText: 'Username',
+                            colors: Colors.black,
                             preIcon:
                                 Icon(Icons.supervised_user_circle_outlined),
                             validate: (String? value) {
@@ -55,6 +56,7 @@ class Changeusername extends StatelessWidget {
                             textInputType: TextInputType.name,
                             labelText: 'Confirm username',
                             preIcon: Icon(Icons.confirmation_num_outlined),
+                            colors: Colors.black,
                             validate: (String? value) {
                               if (value == null || value.isEmpty) {
                                 return 'Confirm username field must be not empty';
@@ -80,10 +82,10 @@ class Changeusername extends StatelessWidget {
                                       },
                                     );
                                   }
-                                  if (cubit.userModel != null) {
+                                  if (cubit.userMessage != null) {
                                     Flushbar(
-                                      title: 'Home work out',
-                                      message: cubit.userModel!.message,
+                                      title: 'IT _HomeWorkout',
+                                      message: cubit.userMessage,
                                       duration: const Duration(seconds: 3),
                                       flushbarPosition: FlushbarPosition.BOTTOM,
                                       flushbarStyle: FlushbarStyle.FLOATING,
@@ -105,8 +107,8 @@ class Changeusername extends StatelessWidget {
                                       isDismissible: false,
                                       icon: Icon(
                                         state is ErrorChangeUsernameState
-                                            ? Icons.check
-                                            : Icons.abc_sharp,
+                                            ? Icons.error_outline
+                                            : Icons.check,
                                         color: state is ErrorChangeUsernameState
                                             ? Colors.red
                                             : Colors.green,

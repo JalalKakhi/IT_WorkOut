@@ -39,6 +39,7 @@ class Changepassword extends StatelessWidget {
                             controlar: cubit.PasswordControlar,
                             textInputType: TextInputType.visiblePassword,
                             labelText: ' password',
+                            colors: Colors.black,
                             preIcon: Icon(Icons.lock_clock_outlined),
                             sufIcon: !cubit.isobsucer
                                 ? Icons.visibility_off_outlined
@@ -60,6 +61,7 @@ class Changepassword extends StatelessWidget {
                             textInputType: TextInputType.visiblePassword,
                             labelText: 'confirmPassword',
                             preIcon: Icon(Icons.confirmation_num_rounded),
+                            colors: Colors.black,
                             sufIcon: !cubit.isobsucer
                                 ? Icons.visibility_off_outlined
                                 : Icons.visibility_outlined,
@@ -89,10 +91,10 @@ class Changepassword extends StatelessWidget {
                                       'password': cubit.confirmPasswordControlar
                                     });
                                   }
-                                  if (cubit.userModel != null) {
+                                  if (cubit.userMessage != null) {
                                     Flushbar(
-                                      title: 'Home work out',
-                                      message: cubit.userModel!.message,
+                                      title: 'IT _HomeWorkout',
+                                      message: cubit.userMessage!,
                                       duration: const Duration(seconds: 3),
                                       flushbarPosition: FlushbarPosition.BOTTOM,
                                       flushbarStyle: FlushbarStyle.FLOATING,
@@ -114,8 +116,8 @@ class Changepassword extends StatelessWidget {
                                       isDismissible: false,
                                       icon: Icon(
                                         state is ErrorChangePasswordState
-                                            ? Icons.check
-                                            : Icons.abc_sharp,
+                                            ? Icons.error_outline
+                                            : Icons.check,
                                         color: state is ErrorChangePasswordState
                                             ? Colors.red
                                             : Colors.green,

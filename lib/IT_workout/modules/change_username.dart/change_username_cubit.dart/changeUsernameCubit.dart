@@ -9,16 +9,16 @@ class Changeusernamecubit extends BaseCubit<Changeusernamestate> {
   Changeusernamecubit() : super(initialChangeUsernameState());
   static Changeusernamecubit get(context) => BlocProvider.of(context);
 
-  PostGetUserModel? userModel  ;
+  String? userMessage;
   var UsernameControlar = TextEditingController();
-  var confirmUsernameControlar = TextEditingController(); 
+  var confirmUsernameControlar = TextEditingController();
 
   Future<void> postusername({
     required Map<String, dynamic> data,
   }) async {
     PostData(
         path: '/api/user/editUserName',
-        errorMessage: 'form Postusername',
+        errorMessage: 'form Post username in change user name cubit',
         data: data,
         header: {"Authorization": "Bearer $baseToken"},
         successState: SuccessChangeUsernameState(),
@@ -28,7 +28,7 @@ class Changeusernamecubit extends BaseCubit<Changeusernamestate> {
           return PostGetUserModel.fromJson(fromjson);
         },
         onSuccess: (model) {
-          userModel = model;
+          userMessage = model.message;
         });
   }
 }

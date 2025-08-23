@@ -8,17 +8,17 @@ class Changepasswordcubit extends BaseCubit<Changepasswordstate> {
   Changepasswordcubit() : super(initialChangePasswordState());
   static Changepasswordcubit get(context) => BlocProvider.of(context);
 
-  PostGetUserModel? userModel;
+  String? userMessage;
   var PasswordControlar = TextEditingController();
   var confirmPasswordControlar = TextEditingController();
   bool isobsucer = true;
 
   Future<void> postPassword({
-    required Map <String,dynamic> data,
+    required Map<String, dynamic> data,
   }) async {
     PostData(
         path: '/api/user/editPassword',
-        errorMessage: 'form PostPassword',
+        errorMessage: 'form Post Password in change password cubit',
         header: {"Authorization": "Bearer $baseToken"},
         data: data,
         successState: SuccessChangePasswordState(),
@@ -28,7 +28,7 @@ class Changepasswordcubit extends BaseCubit<Changepasswordstate> {
           return PostGetUserModel.fromJson(fromjson);
         },
         onSuccess: (model) {
-          userModel = model;
+          userMessage = model.message;
         });
   }
 
