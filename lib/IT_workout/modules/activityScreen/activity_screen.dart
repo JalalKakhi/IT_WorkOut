@@ -105,7 +105,7 @@ class ActivityScreen extends StatelessWidget {
               giveKcalIndicator(
                   kcal:
                       cubit.userModel!.data!.total_calories_burned_in_day ?? 0,
-                  target_kcal: cubit.userModel!.data!.target_calories ?? 0),
+                  target_kcal: cubit.userModel!.data!.target_calories ?? 1),
               // daily goal
               giveDailyGoalSection(),
               SizedBox(

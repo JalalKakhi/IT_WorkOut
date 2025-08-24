@@ -20,10 +20,11 @@ class PostGetUserData {
   int? weight;
   String? gender;
   Float? BMI;
-  double? target_calories;
+  int? target_calories;
   String? reminder;
   int? level_id;
-  String? date_of_birth; //  optional, if you want it
+  String? date_of_birth;
+  int? Age; //  optional, if you want it
 
   PostGetUserData.fromJson(Map<String, dynamic>? json) {
     name = json?["name"];
@@ -35,6 +36,7 @@ class PostGetUserData {
     reminder = json?["reminder"];
     level_id = json?["level_id"];
     date_of_birth = json?["date_of_birth"];
+    Age = json?["Age"];
     // optional
   }
 }

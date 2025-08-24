@@ -126,6 +126,26 @@ class SettingCubit extends BaseCubit<SettingStates> {
         data: data);
   }
 
+  Future<void> postReminder({
+    required Map<String, dynamic> data,
+  }) async {
+    PostData(
+        path: '/api/user/editReminder',
+        errorMessage: "From post reminder in setting cubit",
+        header: {"Authorization": "Bearer $baseToken"},
+        successState: SuccessBmiState(),
+        errorState: ErrorBmiState(),
+        loadingState: LoadingBmiState(),
+        fromJson: (fromJson) {
+          return PostGetUserModel.fromJson(fromJson);
+        },
+        onSuccess: (model) {
+          userMassage = model.message;
+          print(userMassage);
+        },
+        data: data);
+  }
+
   String? transIdToLevelName(int level_id) {
     if (level_id == 1) return 'Biggner';
     if (level_id == 2) return 'Intermadite';

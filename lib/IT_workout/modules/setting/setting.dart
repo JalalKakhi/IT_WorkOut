@@ -1,6 +1,7 @@
 import 'package:IT_workout/IT_workout/modules/bmi/bmi.dart';
 import 'package:IT_workout/IT_workout/modules/change_password.dart/changePassword.dart';
 import 'package:IT_workout/IT_workout/modules/change_username.dart/changeUsername.dart';
+import 'package:IT_workout/IT_workout/modules/data_time_picker.dart/data_time_picker_screen.dart';
 import 'package:IT_workout/IT_workout/modules/date_picker.dart/date_picker_screen.dart';
 import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_cubit.dart';
 import 'package:IT_workout/IT_workout/modules/setting/settingCubit/setting_states.dart';
@@ -89,13 +90,6 @@ class _ProfileGymState extends State<Setting> {
                           onTap: () =>
                               _selectDate(context, cubit.dobController),
                         ),
-                        //       DatePickerField(
-                        //         controller: _dobController,
-                        //         label: 'Date of Birth',
-                        //         hintText: 'DD/MM/YYYY',
-                        //         onTap: () => _selectDate(context),
-
-                        // )
                       ],
                     ),
                     SizedBox(height: 10),
@@ -219,6 +213,20 @@ class _ProfileGymState extends State<Setting> {
                                 .bodyMedium!
                                 .copyWith(color: Colors.grey),
                           ),
+                        ),
+                        DataTimePickerScreen(
+                          onTimeSelected: (timeFromUser) {
+                            cubit.postReminder(data: {
+                              'reminder': timeFromUser ??
+                                  cubit.userModel!.data!.reminder ??
+                                  '05:00:00'
+                            });
+                            cubit.userModel!.data!.reminder = timeFromUser ??
+                                cubit.userModel!.data!.reminder ??
+                                '05:00:00';
+                          },
+                          initialTimeString:
+                              cubit.userModel!.data!.reminder ?? '05:00:00',
                         ),
                         // TextButton(
                         //     onPressed: (){
